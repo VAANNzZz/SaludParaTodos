@@ -1,0 +1,89 @@
+
+		body {
+            overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background-image: url(./fondopsicologia.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 30px;
+}
+
+h1 {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.8); 
+}
+
+
+.table {
+    color: rgba(0, 0, 0, 0.8); 
+    background-color: rgba(255, 255, 255, 0.5); 
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.1); 
+}
+
+
+.thead-dark th {
+    background-color: rgba(52, 58, 64, 0.8); 
+    border: 1px solid rgba(69, 77, 85, 0.8); 
+}
+
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.4); 
+    transition: background-color 0.3s ease;
+}
+
+/* Botones */
+.btn {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.btn-info {
+    background-color: rgba(23, 162, 184, 0.8); /* Botón semi-transparente */
+    border: none;
+}
+
+.btn-danger {
+    background-color: rgba(220, 53, 69, 0.8); /* Botón semi-transparente */
+    border: none;
+}
+
+.btn-primary {
+    background-color: rgba(0, 123, 255, 0.8); /* Botón semi-transparente */
+    border: none;
+}
+
+.btn-success {
+    background-color: rgba(40, 167, 69, 0.8); /* Botón semi-transparente */
+    border: none;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}	
+	

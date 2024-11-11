@@ -1,0 +1,53 @@
+
+            /* Estilo general para el cuerpo */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Card personalizado con bordes curvos */
+.custom-card {
+    width: 400px; /* Ajusta este valor para cambiar el tamaño del cuadrado */
+    border-radius: 30px; /* Bordes curvos */
+    background-color: #ffffff;
+}
+
+/* Estilo del formulario */
+.form-group label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+/* Estilo para el botón */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Centrado vertical y horizontal */
+.min-vh-100 {
+    min-height: 100vh;
+}
