@@ -38,7 +38,7 @@
               }
               if(status =="success"){
                   let messageBody = { subject:"Haz olvidado tu contraseña?",
-                              content: `Su link para restablecer su contraseña es <a href='http://localhost:8082/ResetPassword/${data.idPersonas}''>Reset Password</a>`,
+                              content: `Su link para restablecer su contraseña es <a href='http://localhost:8082/restablecerContraseña/${data.idPersonas}''>Restablecer Contraseña</a>`,
                               email: data.email};
                   $.post({
                       url: "/email/send", 

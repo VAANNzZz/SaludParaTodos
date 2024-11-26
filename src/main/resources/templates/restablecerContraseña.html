@@ -10,15 +10,31 @@
 </head>
 <body>
     <div class="form-box">
-        <form th:action="@{/}" method="POST" class="form_container">
             <div class="input_container">
                 <label class="input_label" for="nueva_contraseña">Nueva contraseña</label>
                 <input placeholder="Ingresa tu nueva contraseña" title="Nueva contraseña" 
-                name="nueva_contraseña" type="nueva_contraseña" class="input_field" id="nueva_contraseña" required>
-                <input type="hidden" name="idPersona" th:value="${idPersona}" />
+                name="password" type="nueva_contraseña" class="input_field" id="password" required>
+                <input type="hidden" id="id" name="id" th:value="${idPersonas}" />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+            <button type="button" onclick="changePassword()" class="btn btn-primary">Submit</button>
     </div>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+  <script>
+    function changePassword() {
+        let data = { "id": $('#id').val(), "password": $('#password').val() };
+        $.post({
+         url: "/resetpassword", 
+         data: JSON.stringify(data),
+         contentType:"application/json",
+         success: function(data, status){
+             alert("Contraseña cambiada con éxito");
+             window.location.href = "/login";
+         },
+     });
+    } 
+</script>
 </body>
 </html>

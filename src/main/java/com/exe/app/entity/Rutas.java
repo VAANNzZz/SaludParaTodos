@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.exe.app.repository.PersonaRepository;
 import com.exe.app.services.CitaService;
 import com.exe.app.services.HistorialPsicosocialService;
+import com.exe.app.services.PersonaDTO;
 import com.exe.app.services.PersonaService;
 import com.exe.app.services.RolService;
 
@@ -110,16 +111,22 @@ public class Rutas {
         return "";
     }
 
-    @GetMapping("/restablecerContraseña")
+    @GetMapping("/restablecerContraseña/{idPersonas}")
     public String restablecerContraseña(@ModelAttribute("idPersonas") Long idPersonas, ModelMap model){
         Optional<Persona> persona = personaService.getPersonaById(idPersonas);
-        return "";
+        model.addAttribute("persona", persona.get());
+        return "restablecerContraseña";
     }
 
-    @PostMapping("/restablecerContraseña")
-    public String restablecerContraseña(@RequestBody PersonaDTO req){
-        Optional<Persona> persona = personaService.getPersonaById(idPersonas);
-        return "";
+    @PostMapping("/resetpassword")
+    public String restablecerContraseñapost(@RequestBody PersonaDTO req){
+        Optional<Persona> persona = personaService.getPersonaById(req.getId());
+		if (persona.isPresent()) {
+			Persona p = persona.get();
+			p.setContraseña(passwordEncoder.encode(req.getPassword()));
+			personaService.saveOrUpdate(p);
+		}
+        return "/restablecerContraseña";
     }
 
     //este metodo captura y muestra la informacion a editar 

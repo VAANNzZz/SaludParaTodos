@@ -24,15 +24,15 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
     return httpSecurity
              .csrf(csrf -> csrf.disable())
                          .authorizeHttpRequests(auth -> auth
-                         .requestMatchers(HttpMethod.POST, "/email/send").permitAll()
+                         .requestMatchers(HttpMethod.POST, "/email/send", "/restablecerContraseña", "/resetpassword").permitAll()
                         // Acceso público
-                        .requestMatchers("/register", "/login", "/static/**", "/public/**", "/Logo.png", "/resurces", "/Agregarpersona", "/templates", "/templates/**", "/olvidecontraseña", "/getPersona").permitAll()
+                        .requestMatchers("/register", "/login", "/static/**", "/public/**", "/Logo.png", "/resurces", "/Agregarpersona", "/templates", "/templates/**", "/olvidecontraseña", "/getPersona","/restablecerContraseña/**", "/restablecerContraseña").permitAll()
                         // Acceso solo para administradores
                         .requestMatchers("/admin/**", "/personas", "/canalOrientadores", "/historial").hasRole("administrador")
                         // Acceso solo para usuarios
                         .requestMatchers("/user/**", "/citas", "/agregarCita", "/historial").hasRole("user")
                         // Acceso general para usuarios autenticados
-                        .anyRequest()
+                        .anyRequest().authenticated()
                         )
             .formLogin(form -> form
                 .defaultSuccessUrl("/index", true)  // Redirige a /index en caso de éxito
