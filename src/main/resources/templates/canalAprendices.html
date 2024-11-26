@@ -4,116 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/index.css">
-    <title>Salud para Todos</title>
+    <title>Aprendices - Salud para Todos</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
+
     <header id="header">
         <img src="/Logo.png" alt="Logo" class="logo">
-
-<!--  <div class="auth-buttons">
-            <button type="submit"><a th:href="/cerrar">Cerrar Sesion</button>
-            
-            
-        </div> -->
-
+        <nav>
+            <ul class="nav">
+                <li><a th:href="@{/index}">Inicio</a></li>
+                <li><a th:href="@{/canalAtencion}">Contacto</a></li>
+                <li><a th:href="@{/canalOtros}">Otros</a></li>
+                
+            </ul>
+        </nav>
         <form class="search-form" action="#" method="get">
             <input type="text" placeholder="Buscar..." aria-label="Buscar">
             <button type="submit">Buscar</button>
         </form>
-        <form class="logout" th:action="@{/logout}" method="post">
-            <button type="submit" class="buttonLogout">Cerrar Sesión</button>
-        </form>
     </header>
 
-    <!-- Título Principal -->
     <div id="main-title">
-        <h1>BIENVENIDO A SALUD PARA TODOS</h1>
+        <h1>Sección para Aprendices</h1>
     </div>
 
-    <!-- Contenido Principal -->
+
     <main>
         <div class="content">
             <div class="text-content">
-                <h1>"El pez koi nada con fuerza contra la corriente, simbolizando perseverancia y superación. 
-                    Sé como el koi: enfrenta los desafíos con valentía y conviértelos en oportunidades para crecer."
-                </h1>
-            </div>
-
-            <div class="slider">
-                <div class="slides">
-                    <div class="slide"><img src="/imagenpsicologiaaaaaaa.png" alt="Imagen 1"></div>
-                    <div class="slide"><img src="/IMAGENPSICOLOGIAFGEF.jpg" alt="Imagen 2"></div>
-                    <div class="slide"><img src="/imagenpsicologiaremasterizado.jpg" alt="Imagen 3"></div>
-                </div>
+                <h2>Bienvenido a la sección de Aprendices</h2>
+                <p>En esta sección podrás acceder a tus citas, historial psicológico y tareas pendientes. Aquí podrás hacer un seguimiento de tu progreso y mantenerte informado sobre tu formación.</p>
             </div>
         </div>
 
-
-        <div class="services-container">
-            <div class="service-card">
-            <img src="icono atencion.png" alt="Canal de Atención">
-            <h3>Canal de Atención</h3>
-            <p>Accede a nuestros diferentes medios para resolver tus inquietudes.</p>
-            <a th:href="@{/canalAtencion}" class="button">Ver más</a>
-            </div>
-        
-            <div class="service-card">
-            <img src="icono aprendiz.png" alt="Aprendices">
-            <h3>Aprendices</h3>
-            <p>Sección para Aprendices.</p>
-            <a th:href="@{/canalAprendices}" class="button">Ver más</a>
-            </div>
-        
-            <div class="service-card">
-            <img src="icono orientador.png" alt="Orientadores">
-            <h3>Orientadores</h3>
-            <p>Sección para orientadores.</p>
-            <a th:href="@{/canalOrientadores}" class="button">Ver más</a>
-            </div>
-        
-            <div class="service-card">
-            <img src="icono otro.png" alt="Otros">
-            <h3>Otros</h3>
-            <p>Explora otros servicios disponibles para mejorar tu experiencia.</p>
-            <a th:href="@{/canalOtros}" class="button">Ver más</a>
-            </div>
-        </div>
-        
-        
-    
-        <!-- Sección de Noticias -->
         <section class="novedades">
-            <h2>IDEAS</h2>
+            <h2>ACCEDER A:</h2>
             <div class="novedades-grid">
                 <div class="novedad">
-                    <img src="salud mental.jpg" alt="Salud mental">
-                    <h3>Salud mental</h3>
-                    <p>Cuida tu mente tanto como cuidas tu cuerpo; ambos trabajan en equipo.</p>
+                    <a th:href="@{/citas}">
+                        <img src="historial.jpg" alt="citas" />
+                        <h3>CITAS</h3>
+                        <p>Haz click para ver el apartado de citas</p>
+                    </a>
                 </div>
                 <div class="novedad">
-                    <img src="amor propio.jpg" alt="Amor propio">
-                    <h3> Amor propio </h3>
-                    <p> Ama tu cuerpo y dale lo que necesita para florecer.</p>
+                    <a th:href="@{/historial}">
+                        <img src="CITAS.jpg" alt="Historial psicosocial" />
+                        <h3> HISTORIAL PSICOSOCIAL </h3>
+                        <p> Haz click para ver tu historial psicosocial</p>
+                    </a>
                 </div>
                 <div class="novedad">
-                    <img src="vida saludable.jpg" alt="Vida saludable">
-                    <h3>Vida saludable</h3>
-                    <p>Cada paso hacia una vida saludable es un paso hacia un mejor mañana.
-                    </p>
-                </div>
-                <div class="novedad">
-                    <img src="salud como derecho.jpg" alt="Derecho a la salud">
-                    <h3>Salud como derecho</h3>
-                    <p>La salud es un derecho y una responsabilidad compartida.</p>
+                    <a th:href="@{/tareasAprendices}"> <!--NO ESTA HECHO TODAVIA-->
+                        <img src="TAREA.jpg" alt="Tareas" />
+                        <h3>TAREAS</h3>
+                        <p>Haz click para ver el apartado de tareas</p>
+                    </a>
                 </div>
             </div>
         </section>
         
+        
     </main>
 
-    <!-- Footer -->
     <footer class="footer-container"> 
     
     <center>
@@ -140,26 +94,6 @@
             <div class="copyright"><p>Copyright © 2024 Psicosocial.</p></div>
         <div class="ubicacion"><p>Ubicación: Centro de Servicios Financieros</p></div>
     </footer>
-
-    <script>
-    let currentSlide = 0;
-
-function moveSlide(direction) {
-  const slides = document.querySelector('.slides');
-  const totalSlides = document.querySelectorAll('.slide').length;
-
-  // Asegúrate de que solo se mueva una slide a la vez
-  currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-
-  // Mueve una slide a la vez (con un desplazamiento del 100% por cada slide)
-  slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-}
-
-// Cambio automático cada 5 segundos (opcional)
-setInterval(() => {
-  moveSlide(1);
-}, 5000);
-    </script>
 
 </body>
 </html>

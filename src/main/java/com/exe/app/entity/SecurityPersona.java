@@ -23,7 +23,7 @@ public class SecurityPersona implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Extraer el nombre del rol desde la entidad Rol asociada a la Persona
         String nombre_rol = persona.getRol().getNombre_rol();
-        return Collections.singletonList(new SimpleGrantedAuthority("Rol_" + nombre_rol));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + nombre_rol));
     }
 
     @Override

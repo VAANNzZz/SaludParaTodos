@@ -21,8 +21,8 @@
 		<div class="row">
 			<div class="col-lg-3 d-flex flex-row">
 				<a th:href="@{/index}" class="btn btn-success btn-sm mb-3 mr-2">Volver al Inicio</a>
-				<a href="#" class="btn btn-success btn-sm mb-3 mr-2">REPORTE EN EXCEL</a>
-				<a href="#" class="btn btn-danger btn-sm mb-3">REPORTE EN PDF</a>
+				<!-- <a href="#" class="btn btn-success btn-sm mb-3 mr-2">REPORTE EN EXCEL</a>
+				<a href="#" class="btn btn-danger btn-sm mb-3">REPORTE EN PDF</a> -->
 				<a th:href="@{/AgregarPersona}" class="btn btn-primary btn-sm mb-3 mr-2">Agregar Persona</a>
 			</div>
 		</div>
@@ -51,7 +51,7 @@
 					<td th:text="${persona.primer_apellido != null ? persona.primer_apellido : 'N/A'}"></td>
 					<td th:text="${persona.segundo_apellido != null ? persona.segundo_apellido : 'N/A'}"></td>
 					<td th:text="${persona.numeroDocumento != null ? persona.numeroDocumento : 'N/A'}"></td>
-					<td th:text="${persona.numero_contacto != null ? persona.numero_contacto : 'N/A'}"></td>
+					<td th:text="${persona.numeroContacto != null ? persona.numeroContacto : 'N/A'}"></td>
 					<td th:text="${persona.email != null ? persona.email : 'N/A'}"></td>
 					<td th:text="${persona.rol != null ? persona.rol.nombre_rol : 'N/A'}"></td>
 					<td>

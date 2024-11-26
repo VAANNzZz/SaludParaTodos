@@ -26,6 +26,10 @@ public class PersonaService{
     public Optional<Persona> getPersonaById(Long idPersonas) {
         return personaRepository.findById(idPersonas);
     }
+
+    public Optional<Persona> getByEmail(String Email) {
+        return personaRepository.findByEmail(Email); 
+    }
     
     public void saveOrUpdate(Persona persona) {
         // Verificar si la contraseña ya está cifrada
@@ -42,6 +46,20 @@ public class PersonaService{
             personaRepository.deleteById(idPersonas);
         }
     }
+
+     // Métodos para verificar duplicados
+     public boolean existsBynumeroDocumento(String numeroDocumento) {
+        return personaRepository.existsByNumeroDocumento(numeroDocumento);
+    }
+
+    public boolean existsBynumeroContacto(String numeroContacto) {
+        return personaRepository.existsByNumeroContacto(numeroContacto);
+    }
+
+    public boolean existsByEmail(String email) {
+        return personaRepository.existsByEmail(email);
+    }
+
 
     public void actualizarContraseñasExistentes() {
         // Actualizar todas las contraseñas en la base de datos si no están cifradas
@@ -62,6 +80,29 @@ public class PersonaService{
             }
         }
     }
+
+    
+
+    /* @Autowired
+    private PersonaRepository personaRepository;
+
+    public String generateVerificationCode(String email) {
+        String code = UUID.randomUUID().toString().substring(0, 6); // Código de 6 caracteres
+        User user = userRepository.findByEmail(email);
+        user.setVerificationCode(code);
+        userRepository.save(user);
+        return code;
+    }
+
+    public boolean emailExists(String email) {
+        return userRepository.findByEmail(email) != null;
+    }
+
+    public boolean verifyCode(String email, String code) {
+        User user = userRepository.findByEmail(email);
+        return user != null && code.equals(user.getVerificationCode());
+    } */
+
 
 
 }

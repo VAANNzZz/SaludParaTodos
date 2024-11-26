@@ -2,6 +2,7 @@ package com.exe.app.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,40 +22,33 @@ public class SecurityConfig {
     @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     return httpSecurity
-            .authorizeHttpRequests(auth -> auth // Controla las rutas que se permiten sin autenticar y cuáles están protegidas
-                .requestMatchers("/register", "/login", "/static/**", "/public/**", "/LOGO SALUD PARA TODOS.jpg",
-                    "/templates/**", "/resurces", "/AgregarPersona", "/Agregarpersona", "/templates")
-                .permitAll() 
-                .requestMatchers("/v1/index").authenticated() // Solo autenticados pueden acceder a /v1/index
-                .requestMatchers("/v1/administrador").hasAuthority("administrador") // Solo admin puede acceder a /v1/administrador
-                .anyRequest().authenticated())  // Requiere autenticación para cualquier otra ruta
+             .csrf(csrf -> csrf.disable())
+                         .authorizeHttpRequests(auth -> auth
+                         .requestMatchers(HttpMethod.POST, "/email/send").permitAll()
+                        // Acceso público
+                        .requestMatchers("/register", "/login", "/static/**", "/public/**", "/Logo.png", "/resurces", "/Agregarpersona", "/templates", "/templates/**", "/olvidecontraseña", "/getPersona").permitAll()
+                        // Acceso solo para administradores
+                        .requestMatchers("/admin/**", "/personas", "/canalOrientadores", "/historial").hasRole("administrador")
+                        // Acceso solo para usuarios
+                        .requestMatchers("/user/**", "/citas", "/agregarCita", "/historial").hasRole("user")
+                        // Acceso general para usuarios autenticados
+                        .anyRequest()
+                        )
             .formLogin(form -> form
                 .defaultSuccessUrl("/index", true)  // Redirige a /index en caso de éxito
                 .failureUrl("/login?error=true")   // Redirige a login con error
                 .loginPage("/login")               // Página de login personalizada
                 .permitAll())                      // Permite acceso a la página de login para todos
+                .logout(logout -> logout
+                    .logoutUrl("/logout")             // Ruta para cerrar sesión
+                    .logoutSuccessUrl("/login?logout=true")  // Redirige a login con mensaje de éxito
+                    .permitAll())
+
+                    .exceptionHandling(Exeption -> Exeption
+                    .accessDeniedPage("/permisos"))
+                                         // Permite acceso al cierre de sesión para todos
             .build(); // Construye la configuración de seguridad // Construye la configuración de seguridad
     }
-
-    // Definimos un UserDetailsService para proporcionar los usuarios en memoria
-    /* @Bean
-    public UserDetailsService userDetailsService() {
-        // Creamos dos usuarios en memoria para pruebas
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("1111") // Nombre de usuario
-                .password("1111") // Contraseña del usuario
-                .roles("USER") // Rol del usuario
-                .build();
-
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("1234") // Nombre de usuario admin
-                .password("1234") // Contraseña del admin
-                .roles("ADMIN") // Rol del administrador
-                .build();
-
-        // Devolvemos un InMemoryUserDetailsManager con los usuarios creados
-        return new InMemoryUserDetailsManager(user, admin);
-    } */
 
     @Bean
     public PasswordEncoder passwordEncoder() {

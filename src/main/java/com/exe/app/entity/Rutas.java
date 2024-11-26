@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.exe.app.repository.PersonaRepository;
@@ -23,7 +28,6 @@ import com.exe.app.services.RolService;
 
 
 @Controller
-
 public class Rutas {
 
     @Autowired
@@ -45,11 +49,13 @@ public class Rutas {
         return "index";
     }
 
-    @GetMapping("/cerrar")
-public String cerrar(RedirectAttributes redirectAttributes) {
-    redirectAttributes.addFlashAttribute("logoutMessage", "Has cerrado sesión exitosamente.");
-    return "redirect:/login";
-}
+     // Ruta de logout
+     @GetMapping("/logout")
+     public String logout() {
+         // Este método solo se llama para confirmar el logout, pero no es necesario
+         // porque Spring Security lo maneja automáticamente
+         return "redirect:/login?logout=true"; // Redirige a la página de login con mensaje
+     }
 
     @GetMapping("/login")
     public String login(){
@@ -76,6 +82,11 @@ public String cerrar(RedirectAttributes redirectAttributes) {
         personaService.saveOrUpdate(persona); // Guarda el usuario en la base de datos
         return "redirect:/login"; 
     }
+
+    @GetMapping("/olvidecontraseña")
+    public String olvidecontraseña(){
+        return "olvidecontraseña";
+    }
     
 
     //este metodo muestra las personas registradas
@@ -84,6 +95,31 @@ public String cerrar(RedirectAttributes redirectAttributes) {
         List<Persona> personas = personaService.getPersona();
         model.addAttribute("personas", personas);
         return "listaPersona";
+    }
+
+    //este metodo brinda informacion de la persona en base a su email
+    @RequestMapping(value="getPersona", method = RequestMethod.GET)
+    public @ResponseBody Persona getPersona(@RequestParam("email") String email){
+        return personaService.getByEmail(email).orElse(null);
+    }
+
+    @PostMapping("olvideContraseña")
+    public String olvideContraseña(@RequestParam("email") String email){
+        Persona persona = getPersona(email);
+        
+        return "";
+    }
+
+    @GetMapping("/restablecerContraseña")
+    public String restablecerContraseña(@ModelAttribute("idPersonas") Long idPersonas, ModelMap model){
+        Optional<Persona> persona = personaService.getPersonaById(idPersonas);
+        return "";
+    }
+
+    @PostMapping("/restablecerContraseña")
+    public String restablecerContraseña(@RequestBody PersonaDTO req){
+        Optional<Persona> persona = personaService.getPersonaById(idPersonas);
+        return "";
     }
 
     //este metodo captura y muestra la informacion a editar 
@@ -151,7 +187,6 @@ public String cerrar(RedirectAttributes redirectAttributes) {
 
     @Autowired
     CitaService citaService;
-
     @GetMapping("/citas")
     public String mostrarCitas(Model model){
        List<Cita> cita = citaService.getCita();
@@ -192,4 +227,44 @@ public String agregarCita(ModelMap model) {
     return "/listahistorialpsicosocial";
     }
 
+    @GetMapping("/eliminarhistorialPsicosocial/{idHistorial_Psicosocial}")
+    public String eliminarhistorialpsicosocial(@PathVariable("idHistorial_Psicosocial") Long idHistorial_Psicosocial, RedirectAttributes redirectAttributes) {
+    historialPsicosocialService.eliminarhistorialpsicosocial(idHistorial_Psicosocial);
+    redirectAttributes.addFlashAttribute("mensaje", "historial psicosocial eliminada con éxito");
+    return "redirect:/historial";
+    }
+
+    @GetMapping("/canalAtencion")
+    public String mostrarCanalAtencion(Model model) {
+        // Aquí puedes agregar atributos al modelo si es necesario
+        // model.addAttribute("atributo", valor);
+        
+        // Devuelve el nombre de la vista que quieres mostrar
+        return "canalAtencion"; // Asegúrate de que esta vista exista en tu carpeta de plantillas
+    }
+
+    @GetMapping("/canalAprendices")
+    public String mostrarCanalAprendices(Model model) {
+        return "canalAprendices"; 
+    }
+
+    @GetMapping("/canalOrientadores")
+    public String mostrarCanalOrientadores(Model model) {
+        return "canalOrientadores"; 
+    }
+
+    @GetMapping("/canalOtros")
+    public String mostrarCanalOtros(Model model) {
+        return "canalOtros";
+    }
+
+    @GetMapping("/tareasAprendices")
+    public String mostrarTareasAprendices(Model model){
+        return "tareasAprendices";
+    }
+
+    @GetMapping("/tareasOrientadores")
+    public String mostrarTareasOrientadores (Model model){
+        return "tareasOrientadores";
+    }
 }

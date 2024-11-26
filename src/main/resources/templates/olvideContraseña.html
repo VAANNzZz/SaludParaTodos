@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña</title>
+    <style>
+        /* Copia los estilos del formulario anterior para mantener la consistencia */
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <form th:action="@{/forgot-password}" method="POST" class="form_container">
+            <div class="title_container">
+                <p class="title">Recuperar Contraseña</p>
+            </div>
+            <div class="input_container">
+                <label class="input_label" for="email_field">Correo Electrónico</label>
+                <input placeholder="Ingresa tu correo electrónico" title="Correo Electrónico" 
+                name="email" type="email" class="input_field" id="email_field" required>
+            </div>
+            <button type="button" onclick="sendForgotPasswordEmail()" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      function sendForgotPasswordEmail() {
+           let data = {
+                email: document.getElementById("email_field").value
+           };
+  
+          $.get("/getPersona", data).done(function(data, status){
+              if(status == "nocontent"){
+                  alert("Email not found");
+              }
+              if(status =="success"){
+                  let messageBody = { subject:"Haz olvidado tu contraseña?",
+                              content: `Su link para restablecer su contraseña es <a href='http://localhost:8082/ResetPassword/${data.idPersonas}''>Reset Password</a>`,
+                              email: data.email};
+                  $.post({
+                      url: "/email/send", 
+                      data: JSON.stringify(messageBody),
+                      contentType:"application/json"
+  
+                  });
+              }
+          });
+  
+              document.getElementById("email_field").value = "";
+          }
+  </script>
+</body>
+</html>

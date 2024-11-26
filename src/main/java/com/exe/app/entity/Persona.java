@@ -35,8 +35,8 @@ public class Persona {
     @Column(name = "numeroDocumento",unique = true, nullable = false)
     private String numeroDocumento;
 
-    @Column(name = "numero_contacto",unique = true, nullable = false)
-    private String numero_contacto;
+    @Column(name = "numeroContacto",unique = true, nullable = false)
+    private String numeroContacto;
 
     @Column(name = "email", unique = true , nullable = false)
     private String email;
@@ -52,14 +52,15 @@ public class Persona {
     }
 
 
-    public Persona(long idPersonas, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, String numeroDocumento, String numero_contacto, String email, String contraseña, Rol rol) {
+
+    public Persona(long idPersonas, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, String numeroDocumento, String numeroContacto, String email, String contraseña, Rol rol) {
         this.idPersonas = idPersonas;
         this.primer_nombre = primer_nombre;
         this.segundo_nombre = segundo_nombre;
         this.primer_apellido = primer_apellido;
         this.segundo_apellido = segundo_apellido;
         this.numeroDocumento = numeroDocumento;
-        this.numero_contacto = numero_contacto;
+        this.numeroContacto = numeroContacto;
         this.email = email;
         this.contraseña = contraseña;
         this.rol = rol;
@@ -114,12 +115,12 @@ public class Persona {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public String getNumero_contacto() {
-        return this.numero_contacto;
+    public String getNumeroContacto() {
+        return this.numeroContacto;
     }
 
-    public void setNumero_contacto(String numero_contacto) {
-        this.numero_contacto = numero_contacto;
+    public void setNumeroContacto(String numeroContacto) {
+        this.numeroContacto = numeroContacto;
     }
 
     public String getEmail() {
@@ -145,6 +146,6 @@ public class Persona {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-
+    
     
 }

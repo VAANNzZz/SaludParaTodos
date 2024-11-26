@@ -55,7 +55,7 @@
 
                             <div class="form-group">
                                         <label for="numero_documento">N° Documento</label>
-                                        <input type="number" name="numero_documento" th:field="*{numero_documento}"
+                                        <input type="text" name="numeroDocumento" th:field="*{numeroDocumento}"
                                                class="form-control"
                                                placeholder="Obligatorio" 
                                                required/>
@@ -63,7 +63,7 @@
 
                             <div class="form-group">
                                 <label for="numero_contacto">Numero de contacto</label>
-                                <input type="number" name="numero_contacto" th:field="*{numero_contacto}"
+                                <input type="number" name="numeroContacto" th:field="*{numeroContacto}"
                                        class="form-control"
                                        placeholder="Obligatorio"
                                        required/>
@@ -75,6 +75,22 @@
                                        class="form-control"
                                        placeholder="Obligatorio"
                                        required/>
+                            </div>
+
+                            <!-- Contraseña -->
+                            <div class="form-group">
+                                <label for="contraseña">Contraseña</label>
+                                <div class="input-group">
+                                    <input type="password" name="contraseña" th:field="*{contraseña}" class="form-control"
+                                           id="contraseña" placeholder="Dejar en blanco para no cambiar" minlength="8" aria-required="true"
+                                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}"
+                                           title="La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula y un número">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                            👁️
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -93,6 +109,16 @@
                 </div>
             </div>
         </div>
+                                    <script>
+                                    const togglePassword = document.getElementById('togglePassword');
+                                    const passwordField = document.getElementById('contraseña');
+    
+                                    togglePassword.addEventListener('click', () => {
+                                    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                                    passwordField.setAttribute('type', type);
+                                    togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+                                    });
+                                </script>
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

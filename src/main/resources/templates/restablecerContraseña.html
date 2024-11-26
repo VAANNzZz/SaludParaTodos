@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña</title>
+    <style>
+        /* Copia los estilos del formulario anterior para mantener la consistencia */
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <form th:action="@{/}" method="POST" class="form_container">
+            <div class="input_container">
+                <label class="input_label" for="nueva_contraseña">Nueva contraseña</label>
+                <input placeholder="Ingresa tu nueva contraseña" title="Nueva contraseña" 
+                name="nueva_contraseña" type="nueva_contraseña" class="input_field" id="nueva_contraseña" required>
+                <input type="hidden" name="idPersona" th:value="${idPersona}" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

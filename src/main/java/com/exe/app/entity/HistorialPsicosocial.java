@@ -1,6 +1,6 @@
 package com.exe.app.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,13 +25,13 @@ public class HistorialPsicosocial {
     private String historial_psicosocial;
 
     @Column(name = "ultima_actualizacion")
-    private Date ultima_actualizacion;
+    private LocalDate ultima_actualizacion;
 
     public HistorialPsicosocial() {
     }
 
 
-    public HistorialPsicosocial(long idHistorial_Psicosocial, String historial_psicosocial, Date ultima_actualizacion) {
+    public HistorialPsicosocial(long idHistorial_Psicosocial, String historial_psicosocial, LocalDate ultima_actualizacion) {
         this.idHistorial_Psicosocial = idHistorial_Psicosocial;
         this.historial_psicosocial = historial_psicosocial;
         this.ultima_actualizacion = ultima_actualizacion;
@@ -54,13 +54,14 @@ public class HistorialPsicosocial {
         this.historial_psicosocial = historial_psicosocial;
     }
 
-    public Date getUltima_actualizacion() {
+    public LocalDate getUltima_actualizacion() {
         return this.ultima_actualizacion;
     }
 
-    public void setUltima_actualizacion(Date ultima_actualizacion) {
+    public void setUltima_actualizacion(LocalDate ultima_actualizacion) {
         this.ultima_actualizacion = ultima_actualizacion;
     }
+
 
 
     public void saveOrUpdate(HistorialPsicosocial historialPsicosocial) {
