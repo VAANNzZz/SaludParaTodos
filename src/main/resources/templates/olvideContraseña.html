@@ -1,56 +1,195 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recuperar Contraseña</title>
     <style>
-        /* Copia los estilos del formulario anterior para mantener la consistencia */
+      /* Estilos generales */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .form-box {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      span {
+          color:red
+      }
+
+      .form_container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .title_container {
+        text-align: center;
+      }
+
+      .title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .input_container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .input_label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .input_field {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .input_field:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+      }
+
+      .btn {
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+
+      /* Estilos para dispositivos móviles */
+      @media (max-width: 600px) {
+        .form-box {
+          padding: 15px;
+        }
+        .title {
+          font-size: 20px;
+        }
+        .input_field {
+          font-size: 14px;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="form-box">
-        <form th:action="@{/forgot-password}" method="POST" class="form_container">
-            <div class="title_container">
-                <p class="title">Recuperar Contraseña</p>
-            </div>
-            <div class="input_container">
-                <label class="input_label" for="email_field">Correo Electrónico</label>
-                <input placeholder="Ingresa tu correo electrónico" title="Correo Electrónico" 
-                name="email" type="email" class="input_field" id="email_field" required>
-            </div>
-            <button type="button" onclick="sendForgotPasswordEmail()" class="btn btn-primary">Submit</button>
-        </form>
+      <form
+        th:action="@{/forgot-password}"
+        method="POST"
+        class="form_container"
+      >
+        <div class="title_container">
+          <p class="title">Recuperar Contraseña</p>
+        </div>
+        <div class="input_container">
+          <label class="input_label" for="email_field"
+            >Correo Electrónico</label
+          >
+          <input
+            placeholder="Ingresa tu correo electrónico"
+            name="email"
+            type="email"
+            class="input_field"
+            id="email_field"
+            pattern="^[a-zA-Z0-9]+@(gmail\.com|hotmail\.com)$"
+            maxlength="45"
+            title="Debe tener entre 1 a 35 caracteres y ser un correo de gmail o hotmail"
+            required
+            aria-required="true"
+            oninput="validateEmail()"
+          />
+          <span id="emailError" class="error-message"
+            >Por favor ingresa un correo válido (solo gmail o hotmail).</span
+          >
+        </div>
+        <button
+          type="submit"
+          onclick="sendForgotPasswordEmail()"
+          class="btn btn-primary"
+        >
+          Enviar
+        </button>
+      </form>
     </div>
+    <script type="text/javascript">
+      // Función para validar el correo electrónico
+      function validateEmail() {
+        let emailField = document.getElementById("email_field");
+        let emailError = document.getElementById("emailError");
+
+        // Verificar si el correo cumple con el patrón especificado
+        let pattern = new RegExp(emailField.pattern);
+
+        if (!pattern.test(emailField.value)) {
+          // Mostrar mensaje de error si no es válido
+          emailError.style.display = "block";
+        } else {
+          // Ocultar el mensaje de error si es válido
+          emailError.style.display = "none";
+        }
+      }
+    </script>
     <script
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-  crossorigin="anonymous"></script>
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
     <script type="text/javascript">
       function sendForgotPasswordEmail() {
-           let data = {
-                email: document.getElementById("email_field").value
-           };
-  
-          $.get("/getPersona", data).done(function(data, status){
-              if(status == "nocontent"){
-                  alert("Email not found");
-              }
-              if(status =="success"){
-                  let messageBody = { subject:"Haz olvidado tu contraseña?",
-                              content: `Su link para restablecer su contraseña es <a href='http://localhost:8082/restablecerContraseña/${data.idPersonas}''>Restablecer Contraseña</a>`,
-                              email: data.email};
-                  $.post({
-                      url: "/email/send", 
-                      data: JSON.stringify(messageBody),
-                      contentType:"application/json"
-  
-                  });
-              }
-          });
-  
-              document.getElementById("email_field").value = "";
+        let data = {
+          email: document.getElementById("email_field").value,
+        };
+
+        $.get("/getPersona", data).done(function (data, status) {
+          if (status == "nocontent") {
+            alert("Email not found");
           }
-  </script>
-</body>
+          if (status == "success") {
+            let messageBody = {
+              subject: "Haz olvidado tu contraseña?",
+              content: `Su link para restablecer su contraseña es <a href='http://localhost:8082/restablecerContraseña/${data.idPersonas}''>Restablecer Contraseña</a>`,
+              email: data.email,
+            };
+            $.post({
+              url: "/email/send",
+              data: JSON.stringify(messageBody),
+              contentType: "application/json",
+            });
+          }
+        });
+
+        document.getElementById("email_field").value = "";
+      }
+    </script>
+  </body>
 </html>

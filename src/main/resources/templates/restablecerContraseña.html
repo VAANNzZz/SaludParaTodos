@@ -3,38 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperar Contraseña</title>
+    <title>Restablecer Contraseña</title>
     <style>
-        /* Copia los estilos del formulario anterior para mantener la consistencia */
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .form_container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .title_container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input_container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input_label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .input_group {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .input_field {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .input_field:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .eye-button {
+            position: absolute;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+
+        .btn {
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para dispositivos móviles */
+        @media (max-width: 600px) {
+            .form-box {
+                padding: 15px;
+            }
+            .title {
+                font-size: 20px;
+            }
+            .input_field {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="form-box">
-            <div class="input_container">
-                <label class="input_label" for="nueva_contraseña">Nueva contraseña</label>
-                <input placeholder="Ingresa tu nueva contraseña" title="Nueva contraseña" 
-                name="password" type="nueva_contraseña" class="input_field" id="password" required>
-                <input type="hidden" id="id" name="id" th:value="${idPersonas}" />
+        <form id="resetPasswordForm" method="POST" class="form_container" novalidate>
+            <div class="title_container">
+                <p class="title">Restablecer Contraseña</p>
             </div>
-            <button type="button" onclick="changePassword()" class="btn btn-primary">Submit</button>
+
+            <div class="input_container">
+                <label class="input_label" for="password">Nueva Contraseña</label>
+                <div class="input_group">
+                    <input placeholder="Ingresa tu nueva contraseña" title="Nueva contraseña"
+                    name="password" type="password" class="input_field" id="password" required
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}" minlength="8" aria-required="true" 
+                    oninput="validatePassword()">
+                    <button type="button" id="togglePassword" class="eye-button">👁️</button>
+                </div>
+                <span id="passwordError" class="error-message">La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula y un número.</span>
+            </div>
+            <input type="hidden" id="id" name="id" th:value="${idPersonas}" />
+            <button type="button" onclick="changePassword()" class="btn">Enviar</button>
+        </form>
     </div>
-    <script
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-  crossorigin="anonymous"></script>
-  <script>
-    function changePassword() {
-        let data = { "id": $('#id').val(), "password": $('#password').val() };
-        $.post({
-         url: "/resetpassword", 
-         data: JSON.stringify(data),
-         contentType:"application/json",
-         success: function(data, status){
-             alert("Contraseña cambiada con éxito");
-             window.location.href = "/login";
-         },
-     });
-    } 
-</script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+    crossorigin="anonymous"></script>
+    
+    <script type="text/javascript">
+        function validatePassword() {
+            let passwordField = document.getElementById("password");
+            let passwordError = document.getElementById("passwordError");
+
+            // Validar si la contraseña cumple con el patrón
+            let pattern = new RegExp(passwordField.pattern);
+            if (!pattern.test(passwordField.value)) {
+                passwordError.style.display = "block";
+                return false;
+            } else {
+                passwordError.style.display = "none";
+                return true;
+            }
+        }
+
+        function changePassword() {
+            if (!validatePassword()) {
+                alert("Por favor, asegúrate de que la contraseña cumpla con los requisitos.");
+                return;
+            }
+
+            let data = { 
+                "id": $('#id').val(), 
+                "password": $('#password').val() 
+            };
+
+            $.post({
+                url: "/resetpassword", 
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function(data, status) {
+                    alert("Contraseña cambiada con éxito");
+                    window.location.href = "/login";
+                },
+                error: function(xhr, status, error) {
+                    alert("Error al cambiar la contraseña. Intenta de nuevo.");
+                }
+            });
+        }
+    </script>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+        });
+    </script>
 </body>
 </html>

@@ -43,7 +43,11 @@
             <h3>Contáctanos</h3>
             <form>
                 <label for="email">Correo Electrónico</label>
-                <input type="email" id="email" name="email" placeholder="Escribe tu correo" required>
+                <input type="email" name="email" class="form-control" 
+                                       id="email" placeholder="Escribe tu correo" required aria-required="true"
+                                       pattern="^[a-zA-Z0-9]+@(gmail\.com|hotmail\.com)$"
+                                       maxlength="45"
+                                       title="Debe tener entre 1 a 35 caracteres y ser un correo de gmail o hotmail">
 
                 <label for="comentarios">Comentarios</label>
                 <textarea id="comentarios" name="comentarios" placeholder="Escribe tus comentarios" rows="4" required></textarea>

@@ -81,6 +81,11 @@ public class PersonaService{
         }
     }
 
+    public Object findByRol(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByRol'");
+    }
+
     
 
     /* @Autowired
