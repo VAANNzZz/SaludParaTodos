@@ -14,6 +14,27 @@
         align-items: center;
         height: 100vh;
         margin: 0;
+        position: relative; /* Añadido para permitir posicionar el botón en la esquina */
+      }
+
+      /* Estilos para el botón de volver al login */
+      .btn-login {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 999;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+
+      .btn-login:hover {
+        background-color: #0056b3;
+        cursor: pointer;
       }
 
       .form-box {
@@ -27,7 +48,7 @@
       }
 
       span {
-          color:red
+        color: red;
       }
 
       .form_container {
@@ -102,6 +123,9 @@
     </style>
   </head>
   <body>
+    <!-- Botón para volver al login -->
+    <a href="/login" class="btn-login" aria-label="Volver al login">Volver al Login</a>
+
     <div class="form-box">
       <form
         th:action="@{/forgot-password}"
@@ -112,9 +136,7 @@
           <p class="title">Recuperar Contraseña</p>
         </div>
         <div class="input_container">
-          <label class="input_label" for="email_field"
-            >Correo Electrónico</label
-          >
+          <label class="input_label" for="email_field">Correo Electrónico</label>
           <input
             placeholder="Ingresa tu correo electrónico"
             name="email"
@@ -141,6 +163,7 @@
         </button>
       </form>
     </div>
+
     <script type="text/javascript">
       // Función para validar el correo electrónico
       function validateEmail() {
@@ -159,6 +182,7 @@
         }
       }
     </script>
+
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="

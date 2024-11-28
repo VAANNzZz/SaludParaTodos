@@ -1,4 +1,4 @@
-/* package com.exe.app.entity;
+package com.exe.app.entity;
 
 import java.time.LocalDate;
 
@@ -105,4 +105,3 @@ public class Tarea {
 
 
 }
- */

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tareas Aprendiz</title>
+</head>
+<style>
+    /* archivo: estilo.css */
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    background-color: #23cdda;
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    height: 50px;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+header .search-form {
+    display: flex;
+    align-items: center;
+}
+
+header .search-form input[type="text"] {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+header .buttonLogout {
+    padding: 5px 10px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+header .buttonLogout:hover {
+    background-color: #c9302c;
+}
+
+/* Footer */
+footer {
+    background-color: #00d8e8;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Main content */
+main {
+    padding: 20px;
+    margin-bottom: 60px; /* Espacio para no superponer al footer */
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+h1, h2 {
+    color: #0f9cb4;
+}
+
+/* Lista de tareas */
+#tareas-lista ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#tareas-lista li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+form label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="file"],
+form button {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #046b79;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #000000;
+}
+
+</style>
+
+<body>
+    <header id="header">
+        <img src="/Logo.png" alt="Logo" class="logo">
+        <form class="search-form" action="#" method="get">
+            <input type="text" placeholder="Buscar..." aria-label="Buscar">
+            <button type="submit">Buscar</button>
+        </form>
+    </header>
+    <center>
+    <main>
+        <section class="contenedor-tareas">
+            <h1>Tareas Asignadas</h1>
+            <div th:if="${misTareas != null}">
+                <ul>
+                    <li th:each="tarea : ${misTareas}">
+                        <span th:text="${tarea.descripcion}">Descripción de la tarea</span> - 
+                        <span th:text="${tarea.fechaEntrega}">Fecha de entrega</span>
+                    </li>
+                </ul>
+            </div>
+            <div th:if="${misTareas == null}">
+                <p>No tienes tareas asignadas en este momento.</p>
+            </div>
+        </section>
+
+        <section class="subir-tarea">
+            <h2>Subir Tarea</h2>
+            <form th:action="@{/subirTarea}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="idPersonaDestinatario" th:value="${personaId}">
+                <div>
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" id="descripcion" name="descripcion" required>
+                </div>
+                <div>
+                    <label for="archivo">Archivo:</label>
+                    <input type="file" id="archivo" name="archivo" required>
+                </div>
+                <button type="submit">Subir Tarea</button>
+            </form>
+        </section>
+    </main>
+</center>
+    <footer th:replace="fragments/footer :: footer"></footer> <!-- Incluye el footer común -->
+<script>
+    document.addEventListener("DOMContentLoaded", function (){
+        const fechaEntregaInput =document.getElementById("fechaEntrega");
+        const submitButton = document.getElementById("submit-button");
+
+        fechaEntregaInput.addEventListener("change", function(){
+            const selectedDate = new Date (fechaEntregaInput.value);
+            const currentDate = new Date();
+
+            if (selectedDate < currentDate){
+                submitButton.disable = true;
+                alert("No se puede subir la tarea después de la fecha de entrega :(");    
+            } else {
+                submitButton.disable=false;
+            }
+        })
+    })
+</script>
+
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-/* package com.exe.app.controller;
+package com.exe.app.controller;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,15 +27,15 @@ public class TareaController {
     private TareaService tareaService;
 
     @GetMapping("/tareasAprendices")
-    public String mostrarTareasAprendices( @RequestParam Long idPersonaDestinatario, Model model){
-        Persona destinatario = personaService.getPersonaById(idPersonaDestinatario). orElse(null);
-        if (destinatario == null || destinatario.getRol().getNombre_rol().equals("user")){
+    public String mostrarTareasAprendices( @RequestParam Long idPersonas, Model model){
+        Persona persona = personaService.getPersonaById(idPersonas). orElse(null);
+        if (persona == null || persona.getRol().getNombre_rol().equals("user")){
             model.addAttribute("error", "aprendiz no encontrado");
             return "errorPage";
         }
-        List<Tarea> misTareas = tareaService.getTareasByPersonaId(idPersonaDestinatario);
+        List<Tarea> misTareas = tareaService.getTareasByPersonaId(idPersonas);
         model.addAttribute("misTareas", misTareas);
-        model.addAttribute("personaId", idPersonaDestinatario);
+        model.addAttribute("personaId", idPersonas);
         return "tareasAprendices";
     }
 
@@ -119,6 +119,3 @@ public class TareaController {
     }
 
 }
-
-
- */

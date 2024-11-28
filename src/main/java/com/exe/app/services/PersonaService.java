@@ -19,6 +19,9 @@ public class PersonaService{
     @Autowired
     private PasswordEncoder passwordEncoder; // Inyectar el PasswordEncoder
 
+    @Autowired
+    PersonaMapper personaMapper;
+
     public List<Persona> getPersona(){
         return personaRepository.findAll();
     }
@@ -31,6 +34,11 @@ public class PersonaService{
         return personaRepository.findByEmail(Email); 
     }
     
+    public void updatePersona(PersonaDTO personaDTO) {
+        Persona persona = personaRepository.findById(personaDTO.getIdPersonas()).get();
+        personaMapper.updatePersonaFromDTO(personaDTO, persona);
+        personaRepository.save(persona);
+    }
     public void saveOrUpdate(Persona persona) {
         // Verificar si la contraseña ya está cifrada
         String contraseñaActual = persona.getContraseña();

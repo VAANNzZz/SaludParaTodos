@@ -6,18 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/register.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+      /* Estilos para el botón de volver al login */
+      .btn-login {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 999;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+      
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}" aria-label="Volver al login">Volver al login</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
+    <a href="/login" class="btn-login" aria-label="Volver al login">Volver al Login</a>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8 col-sm-10">
@@ -116,7 +125,7 @@
                                 <label for="roles">Rol</label>
                                 <select th:field="*{rol}" name="roles" id="roles" class="form-control" aria-label="Seleccionar rol">
                                     <option th:each="rol : ${roles}" 
-                                            th:if="${rol.nombre_rol == 'user'}"
+                                            th:if="${rol.nombre_rol == 'aprendiz'}"
                                             th:value="${rol.idRol}" 
                                             th:text="${rol.nombre_rol}"></option>
                                 </select>

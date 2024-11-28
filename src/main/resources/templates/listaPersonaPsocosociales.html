@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Personas</title>
+	<title>PSICOSOCIALES</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="./public/CSS/estilostabalas.css">
@@ -16,7 +16,7 @@
 
 	<div class="container">
 		<div class="row text-center d-flex align-items-center">
-			<h1 class="text-align: center;">PERSONAS</h1>
+			<h1 class="text-align: center;">PSICOSOCIALES</h1>
 		</div>
 		<div class="row">
 			<div class="col-lg-3 d-flex flex-row">
@@ -44,7 +44,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each=" persona:${personas}">
+				<tr th:each="persona : ${personas}" th:if="${#lists.contains(persona.rol.nombre_rol, 'aprendiz')}">
 					<td th:text="${persona.idPersonas}"></td>
 					<td th:text="${persona.primer_nombre != null ? persona.primer_nombre : 'N/A'}"></td>
 					<td th:text="${persona.segundo_nombre != null ? persona.segundo_nombre : 'N/A'}"></td>
@@ -55,12 +55,10 @@
 					<td th:text="${persona.email != null ? persona.email : 'N/A'}"></td>
 					<td th:text="${persona.rol != null ? persona.rol.nombre_rol : 'N/A'}"></td>
 					<td>
-						<a class="btn btn-info"
-							th:href="@{/editarpersona/{idPersonas}(idPersonas=${persona.idPersonas})}">EDITAR</a>
+						<a class="btn btn-info" th:href="@{/editarpersona/{idPersonas}(idPersonas=${persona.idPersonas})}">EDITAR</a>
 						<br>
 						<br>
-						<a class="btn btn-danger"
-  						 th:href="@{/eliminarpersona/{idPersonas}(idPersonas=${persona.idPersonas})}">ELIMINAR</a>
+						<a class="btn btn-danger" th:href="@{/eliminarpersona/{idPersonas}(idPersonas=${persona.idPersonas})}">ELIMINAR</a>
 					</td>
 				</tr>
 			</tbody>

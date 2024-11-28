@@ -131,7 +131,7 @@
                 <label class="input_label" for="password">Nueva Contraseña</label>
                 <div class="input_group">
                     <input placeholder="Ingresa tu nueva contraseña" title="Nueva contraseña"
-                    name="password" type="password" class="input_field" id="password" required
+                    name="password" type="contraseña" class="input_field" id="password" required
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}" minlength="8" aria-required="true" 
                     oninput="validatePassword()">
                     <button type="button" id="togglePassword" class="eye-button">👁️</button>
@@ -170,8 +170,8 @@
             }
 
             let data = { 
-                "id": $('#id').val(), 
-                "password": $('#password').val() 
+                "idPersonas": $('#id').val(), 
+                "contraseña": $('#password').val() 
             };
 
             $.post({

@@ -26,8 +26,6 @@ import com.exe.app.services.PersonaDTO;
 import com.exe.app.services.PersonaService;
 import com.exe.app.services.RolService;
 
-
-
 @Controller
 public class Rutas {
 
@@ -42,151 +40,163 @@ public class Rutas {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
 
-    //este metodo muestra el inicio
+    // este metodo muestra el inicio
     @GetMapping("/index")
-    public String index(){
+    public String index() {
         return "index";
     }
 
-     // Ruta de logout
-     @GetMapping("/logout")
-     public String logout() {
-         // Este método solo se llama para confirmar el logout, pero no es necesario
-         // porque Spring Security lo maneja automáticamente
-         return "redirect:/login?logout=true"; // Redirige a la página de login con mensaje
-     }
+    // Ruta de logout
+    @GetMapping("/logout")
+    public String logout() {
+        // Este método solo se llama para confirmar el logout, pero no es necesario
+        // porque Spring Security lo maneja automáticamente
+        return "redirect:/login?logout=true"; // Redirige a la página de login con mensaje
+    }
 
     @GetMapping("/login")
-    public String login(){
+    public String showLoginForm(Model model, RedirectAttributes redirectAttributes) {
+        // Si hay algún mensaje flash, lo mostramos en la vista
+        if (redirectAttributes.containsAttribute("successMessage")) {
+            model.addAttribute("successMessage", redirectAttributes.getAttribute("successMessage"));
+        }
         return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam("username") String username,
+            @RequestParam("password") String password,
+            RedirectAttributes redirectAttributes) {
+        // Lógica para verificar credenciales, si son correctas:
+        redirectAttributes.addFlashAttribute("successMessage", "¡Bienvenido de nuevo, " + username + "!");
+        return "redirect:/login"; // Redirige de nuevo a la página de login
     }
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("persona", new Persona());
         model.addAttribute("roles", rolService.getRol());
-        return "register"; 
+        return "register";
     }
 
     @PostMapping("/register")
-    public String registerPersona(@ModelAttribute("persona") Persona persona, Model model) {
-        // Verifica si el correo ya está registrado
+    public String registerPersona(@ModelAttribute("persona") Persona persona, RedirectAttributes redirectAttributes,
+            Model model) {
         if (personaRepository.findByNumeroDocumento(persona.getNumeroDocumento()).isPresent()) {
-            model.addAttribute("error", "El numero de documento ya está en uso.");
-            return "register"; 
+            model.addAttribute("error", "El número de documento ya está en uso.");
+            return "register";
         }
-        
-        // Cifra la contraseña antes  guardar
-        persona.setContraseña(passwordEncoder.encode(persona.getContraseña()));
-        personaService.saveOrUpdate(persona); // Guarda el usuario en la base de datos
-        return "redirect:/login"; 
+
+        // Guarda la persona
+        personaRepository.save(persona);
+
+        redirectAttributes.addFlashAttribute("successMessage", "¡Registro exitoso!");
+        return "redirect:/login"; // Redirige al login después de un registro exitoso
     }
 
     @GetMapping("/olvidecontraseña")
-    public String olvidecontraseña(){
+    public String olvidecontraseña() {
         return "olvidecontraseña";
     }
-    
 
-    //este metodo muestra las personas registradas
-    @GetMapping("/personas")
-    public String mostrarPersonas(Model model){
+    // este metodo muestra las personas registradas
+    @GetMapping("/personas/aprendices")
+    public String mostrarPersonas(Model model) {
         List<Persona> personas = personaService.getPersona();
         model.addAttribute("personas", personas);
-        return "listaPersona";
+        return "listaPersonaAprendices";
     }
 
-    //este metodo brinda informacion de la persona en base a su email
-    @RequestMapping(value="getPersona", method = RequestMethod.GET)
-    public @ResponseBody Persona getPersona(@RequestParam("email") String email){
+    // este metodo brinda informacion de la persona en base a su email
+    @RequestMapping(value = "getPersona", method = RequestMethod.GET)
+    public @ResponseBody Persona getPersona(@RequestParam("email") String email) {
         return personaService.getByEmail(email).orElse(null);
     }
 
     @PostMapping("olvideContraseña")
-    public String olvideContraseña(@RequestParam("email") String email){
+    public String olvideContraseña(@RequestParam("email") String email) {
         Persona persona = getPersona(email);
-        
+
         return "";
     }
 
     @GetMapping("/restablecerContraseña/{idPersonas}")
-    public String restablecerContraseña(@ModelAttribute("idPersonas") Long idPersonas, ModelMap model){
+    public String restablecerContraseña(@ModelAttribute("idPersonas") Long idPersonas, ModelMap model) {
         Optional<Persona> persona = personaService.getPersonaById(idPersonas);
         model.addAttribute("persona", persona.get());
         return "restablecerContraseña";
     }
 
     @PostMapping("/resetpassword")
-    public String restablecerContraseñapost(@RequestBody PersonaDTO req){
-        Optional<Persona> persona = personaService.getPersonaById(req.getId());
-		if (persona.isPresent()) {
-			Persona p = persona.get();
-			p.setContraseña(passwordEncoder.encode(req.getPassword()));
-			personaService.saveOrUpdate(p);
-		}
+    public String restablecerContraseñapost(@RequestBody PersonaDTO req) {
+        Optional<Persona> persona = personaService.getPersonaById(req.getIdPersonas());
+        if (persona.isPresent()) {
+            Persona p = persona.get();
+            p.setContraseña(passwordEncoder.encode(req.getContraseña()));
+            personaService.saveOrUpdate(p);
+        }
         return "/restablecerContraseña";
     }
 
-    //este metodo captura y muestra la informacion a editar 
+    // este metodo captura y muestra la informacion a editar
     @GetMapping("/AgregarPersona")
-    public String AgregarPersona(ModelMap model){
+    public String AgregarPersona(ModelMap model) {
         model.addAttribute("persona", new Persona());
         model.addAttribute("roles", rolService.getRol());
         return "Agregarpersona";
-    }  
+    }
 
-    //este metodo Guarda la informacion en la BD
+    // este metodo Guarda la informacion en la BD
     @PostMapping("/Agregarpersona")
-    public String savePersona(@ModelAttribute("persona")Persona persona) {
+    public String savePersona(@ModelAttribute("persona") Persona persona) {
         personaService.saveOrUpdate(persona);
         System.out.println("Se registró la Persona exitosamente!" + persona);
-        return "redirect:/personas";
+        return "redirect:/listaPersonaAprendices";
     }
 
-    //editarpersona
-    @GetMapping("/editarpersona/{idPersonas}")
-    public String editarPersona(@PathVariable("idPersonas") Long idPersonas,ModelMap Model){
-    Model.addAttribute("persona", new Persona());   
-    Optional<Persona> personas = personaService.getPersonaById(idPersonas);
-    Model.addAttribute("persona", personas.orElse(null));
-    List<Rol> roles = rolService.getRol();
-    Model.addAttribute("roles", roles);
-    return "/editarpersona";
+    // Método para editar persona
+    @GetMapping("/editaraprendiz/{idPersonas}")
+    public String editarPersona(@PathVariable("idPersonas") Long idPersonas, ModelMap Model) {
+        Model.addAttribute("persona", new Persona());
+        Optional<Persona> personas = personaService.getPersonaById(idPersonas);
+        Model.addAttribute("persona", personas.orElse(null));
+        List<Rol> roles = rolService.getRol();
+        Model.addAttribute("roles", roles);
+        return "/editarAprendiz";
     }
 
+    // Método para actualizar persona
+    @PostMapping("/editarAprendiz")
+    public String metodoEditarPersona(PersonaDTO personaDTO) {
+        personaService.updatePersona(personaDTO);
 
-    //editarpersona
-    @PostMapping("/editarPersona/editarPersona")
-    public String metodoEditarPersona(@ModelAttribute("persona") Persona persona){
-        personaService.saveOrUpdate(persona);
-        return "redirect:/personas";
+        return "redirect:/personas/aprendices";
     }
 
-    //Eliminar
+    // Eliminar
     @GetMapping("/eliminarpersona/{idPersonas}")
-    public String eliminarpersona(Model model, @PathVariable Long idPersonas){
+    public String eliminarpersona(Model model, @PathVariable Long idPersonas) {
         personaService.eliminarpersona(idPersonas);
         return "redirect:/personas";
     }
 
-    //mostrar roles
+    // mostrar roles
     @GetMapping("/rol")
-    public String mostrarRoles(Model model){
-       List<Rol> rol = rolService.getRol();
+    public String mostrarRoles(Model model) {
+        List<Rol> rol = rolService.getRol();
         model.addAttribute("roles", rol);
-       return "/listaRol";
+        return "/listaRol";
     }
 
     @GetMapping("/agregarRol")
-    public String AgregarRoles(ModelMap model){
+    public String AgregarRoles(ModelMap model) {
         model.addAttribute("rol", new Rol());
         return "/agregarRol";
     }
 
     @PostMapping("/AgregarRol")
-    public String saveRol(@ModelAttribute("rol")Rol rol) {
+    public String saveRol(@ModelAttribute("rol") Rol rol) {
         rolService.saveOrUpdate(rol);
         System.out.println("Se registró la Persona exitosamente!" + rol);
         return "redirect:/rol";
@@ -194,32 +204,36 @@ public class Rutas {
 
     @Autowired
     CitaService citaService;
+
     @GetMapping("/citas")
-    public String mostrarCitas(Model model){
-       List<Cita> cita = citaService.getCita();
+    public String mostrarCitas(Model model) {
+        List<Cita> cita = citaService.getCita();
         model.addAttribute("citas", cita);
-       return "/listaCita";
+        return "/listaCita";
     }
 
-    //este metodo captura y muestra la informacion a editar 
+    // este metodo captura y muestra la informacion a editar
     @GetMapping("/agregarCita")
-public String agregarCita(ModelMap model) {
-    model.addAttribute("cita", new Cita());
-    model.addAttribute("historial_psicosocial", historialPsicosocialService.gethistorialPsicosocial()); // Asegúrate de tener este método
-    model.addAttribute("personas", personaService.getPersona()); // Asegúrate de tener este método
-    return "AgregarCita";
-}
+    public String agregarCita(ModelMap model) {
+        model.addAttribute("cita", new Cita());
+        model.addAttribute("historial_psicosocial", historialPsicosocialService.gethistorialPsicosocial()); // Asegúrate
+                                                                                                            // de tener
+                                                                                                            // este
+                                                                                                            // método
+        model.addAttribute("personas", personaService.getPersona()); // Asegúrate de tener este método
+        return "AgregarCita";
+    }
 
-    //este metodo Guarda la informacion en la BD
+    // este metodo Guarda la informacion en la BD
     @PostMapping("/agregarCita")
-    public String saveCita(@ModelAttribute("cita")Cita cita) {
+    public String saveCita(@ModelAttribute("cita") Cita cita) {
         citaService.saveOrUpdate(cita);
         System.out.println("Se registró la Persona exitosamente!" + cita);
         return "redirect:/citas";
     }
 
     @GetMapping("/eliminarcita/{idCitas}")
-    public String eliminarcita(Model model, @PathVariable Long idCitas){
+    public String eliminarcita(Model model, @PathVariable Long idCitas) {
         citaService.eliminarcita(idCitas);
         return "redirect:/citas";
     }
@@ -229,35 +243,36 @@ public String agregarCita(ModelMap model) {
 
     @GetMapping("/historial")
     public String mostrarHistorialPsicosocial(Model model) {
-    List<HistorialPsicosocial> historialPsicosocial = historialPsicosocialService.gethistorialPsicosocial();
-    model.addAttribute("historial_psicosocial", historialPsicosocial);
-    return "/listahistorialpsicosocial";
+        List<HistorialPsicosocial> historialPsicosocial = historialPsicosocialService.gethistorialPsicosocial();
+        model.addAttribute("historial_psicosocial", historialPsicosocial);
+        return "/listahistorialpsicosocial";
     }
 
     @GetMapping("/eliminarhistorialPsicosocial/{idHistorial_Psicosocial}")
-    public String eliminarhistorialpsicosocial(@PathVariable("idHistorial_Psicosocial") Long idHistorial_Psicosocial, RedirectAttributes redirectAttributes) {
-    historialPsicosocialService.eliminarhistorialpsicosocial(idHistorial_Psicosocial);
-    redirectAttributes.addFlashAttribute("mensaje", "historial psicosocial eliminada con éxito");
-    return "redirect:/historial";
+    public String eliminarhistorialpsicosocial(@PathVariable("idHistorial_Psicosocial") Long idHistorial_Psicosocial,
+            RedirectAttributes redirectAttributes) {
+        historialPsicosocialService.eliminarhistorialpsicosocial(idHistorial_Psicosocial);
+        redirectAttributes.addFlashAttribute("mensaje", "historial psicosocial eliminada con éxito");
+        return "redirect:/historial";
     }
 
     @GetMapping("/canalAtencion")
     public String mostrarCanalAtencion(Model model) {
         // Aquí puedes agregar atributos al modelo si es necesario
         // model.addAttribute("atributo", valor);
-        
+
         // Devuelve el nombre de la vista que quieres mostrar
         return "canalAtencion"; // Asegúrate de que esta vista exista en tu carpeta de plantillas
     }
 
     @GetMapping("/canalAprendices")
     public String mostrarCanalAprendices(Model model) {
-        return "canalAprendices"; 
+        return "canalAprendices";
     }
 
     @GetMapping("/canalOrientadores")
     public String mostrarCanalOrientadores(Model model) {
-        return "canalOrientadores"; 
+        return "canalOrientadores";
     }
 
     @GetMapping("/canalOtros")
@@ -265,13 +280,15 @@ public String agregarCita(ModelMap model) {
         return "canalOtros";
     }
 
-    @GetMapping("/tareasAprendices")
-    public String mostrarTareasAprendices(Model model){
-        return "tareasAprendices";
-    }
+    /*
+     * @GetMapping("/tareasAprendices")
+     * public String mostrarTareasAprendices(Model model){
+     * return "tareasAprendices";
+     * }
+     */
 
     @GetMapping("/tareasOrientadores")
-    public String mostrarTareasOrientadores (Model model){
+    public String mostrarTareasOrientadores(Model model) {
         return "tareasOrientadores";
     }
 }
