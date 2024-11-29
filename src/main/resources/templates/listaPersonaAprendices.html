@@ -23,7 +23,7 @@
 				<a th:href="@{/index}" class="btn btn-success btn-sm mb-3 mr-2">Volver al Inicio</a>
 				<!-- <a href="#" class="btn btn-success btn-sm mb-3 mr-2">REPORTE EN EXCEL</a>
 				<a href="#" class="btn btn-danger btn-sm mb-3">REPORTE EN PDF</a> -->
-				<a th:href="@{/AgregarPersona}" class="btn btn-primary btn-sm mb-3 mr-2">Editar</a>
+				<a th:href="@{/AgregarPersona}" class="btn btn-primary btn-sm mb-3 mr-2">Agregar aprendiz</a>
 			</div>
 		</div>
 		<br>
@@ -36,7 +36,7 @@
 					<th scope="col">Segundo nombre</th>
 					<th scope="col">Primer apellido</th>
 					<th scope="col">Segundo apellido</th>
-					<th scope="col">Numero documento</th>
+					<th scope="col">N° Documento</th>
 					<th scope="col">Numero contacto</th>
 					<th scope="col">Email</th>
 					<th scope="col">Rol</th>
@@ -44,7 +44,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="persona : ${personas}" th:if="${#lists.contains(persona.rol.nombre_rol, 'aprendiz')}">
+				<tr th:each="persona : ${personas}" th:if="${!#lists.contains(persona.rol.nombre_rol, 'Psicosocial')}">
 					<td th:text="${persona.idPersonas}"></td>
 					<td th:text="${persona.primer_nombre != null ? persona.primer_nombre : 'N/A'}"></td>
 					<td th:text="${persona.segundo_nombre != null ? persona.segundo_nombre : 'N/A'}"></td>

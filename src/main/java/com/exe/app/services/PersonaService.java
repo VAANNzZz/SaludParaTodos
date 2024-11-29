@@ -26,6 +26,10 @@ public class PersonaService{
         return personaRepository.findAll();
     }
 
+    public Optional<Persona> obtenerPersonaPorNumeroDocumento(String numeroDocumento) {
+        return personaRepository.findByNumeroDocumento(numeroDocumento);
+    }
+
     public Optional<Persona> getPersonaById(Long idPersonas) {
         return personaRepository.findById(idPersonas);
     }

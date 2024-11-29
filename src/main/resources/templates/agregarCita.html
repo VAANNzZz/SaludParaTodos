@@ -1,73 +1,113 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Agregar Persona</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../static/agregarPersona.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/citas}">Ver listado de las citas</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="container mt-3">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-                    <h1 class="text-center">Agregar Citas</h1>
-                    <div class="card-body">
-                        <form th:action="@{/agregarCita}" th:object="${cita}" method="POST">
+<head>
+    <title>Agregar Cita</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/agregarPersona.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/citas}">Ver listado de las citas</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center">Agregar Cita</h1>
+                <div class="card-body">
+                    <form th:action="@{/agregarCita}" th:object="${cita}" method="POST">
+                        <!-- Selección de número de documento -->
+                        <div class="form-group">
+                            <label for="numeroDocumento">Número de Documento</label>
+                            <select class="form-control" id="numeroDocumento" name="numeroDocumento" required>
+                                <option value="">Seleccionar Documento</option>
+                                <option th:each="persona : ${personas}" th:value="${persona.numeroDocumento}" 
+                                        th:text="${persona.numeroDocumento}"></option>
+                            </select>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="fecha">Fecha</label>
-                                <input type="date" name="fecha" th:field="*{fecha}"
-                                       class="form-control"
-                                       placeholder="Opcional" 
-                                       required/>
-                            </div>
+                        <!-- Fecha de la cita -->
+                        <div class="form-group">
+                            <label for="fecha">Fecha</label>
+                            <input type="date" name="fecha" th:field="*{fecha}" class="form-control" required />
+                        </div>
 
-                            <div class="form-group">
-                                <label for="estado">Estado</label>
-                                <input type="text" name="estado" th:field="*{estado}"
-                                       class="form-control"
-                                       placeholder="PENDIENTE, COMPLETADA O CANCELADA" />
-                            </div>
+                        <!-- Estado de la cita -->
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <select id="estado" class="form-control" th:field="*{estado}" required>
+                                <option value="PENDIENTE">PENDIENTE</option>
+                                <option value="AVANZANDO">AVANZANDO</option>
+                                <option value="COMPLETADA">COMPLETADA</option>
+                            </select>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="historial_psicosocial">ID Historial Psicosocial</label>
-                                <select style="height: 40px;" th:field="*{historialPsicosocial}" name="historial_psicosocial" class="form-control">
-                                    <option th:each="historialPsicosocial : ${historial_psicosocial}" th:value="${historialPsicosocial.idHistorial_Psicosocial}" th:text="${historialPsicosocial.idHistorial_Psicosocial}">
-                                    </option>
-                                </select>
-                            </div>
+                        <!-- Campos dependientes (rellenados automáticamente) -->
+                        <div class="form-group">
+                            <label for="idPersona">ID Persona</label>
+                            <input type="text" class="form-control" id="idPersona" name="idPersona" readonly />
+                        </div>
 
-                            <div class="form-group">
-                                <label for="personas">ID Personas</label>
-                                <select style="height: 40px;" th:field="*{persona}" name="personas" class="form-control">
-                                    <option th:each="persona : ${personas}" th:value="${persona.idPersonas}" th:text="${persona.idPersonas}">
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">Enviar</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="correo">Correo</label>
+                            <input type="email" class="form-control" id="correo" name="correo" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono">Número de Teléfono</label>
+                            <input type="tel" class="form-control" id="telefono" name="telefono" readonly />
+                        </div>
+
+                        <!-- Botón para agregar la cita -->
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Agregar Cita</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="/static/JS/formularios.js"></script>
-    </body>
+    </div>
+
+    <!-- Script para autocompletar campos -->
+    <script>
+        document.getElementById('numeroDocumento').addEventListener('change', function() {
+            const selectedDoc = this.value;
+
+            // Obtener lista de personas desde Thymeleaf
+            const personas = /*[[${personas}]]*/ [];
+            const selectedPersona = personas.find(persona => persona.numeroDocumento === selectedDoc);
+
+            if (selectedPersona) {
+                // Autocompletar campos
+                document.getElementById('idPersona').value = selectedPersona.idPersonas;
+                document.getElementById('nombre').value = `${selectedPersona.primer_nombre} ${selectedPersona.primer_apellido}`;
+                document.getElementById('correo').value = selectedPersona.email;
+                document.getElementById('telefono').value = selectedPersona.numeroContacto;
+            } else {
+                // Limpiar campos si no hay coincidencia
+                document.getElementById('idPersona').value = '';
+                document.getElementById('nombre').value = '';
+                document.getElementById('correo').value = '';
+                document.getElementById('telefono').value = '';
+            }
+        });
+    </script>
+
+    <!-- Scripts necesarios -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
 </html>

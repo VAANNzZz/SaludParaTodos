@@ -30,10 +30,13 @@
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">ID citas</th>
-					<th scope="col">idPersona</th>
+					<th scope="col">ID persona</th>
+					<th scope="col">N° Identificación</th>
 					<th scope="col">Nombre</th>
 					<th scope="col">Fecha</th>
                     <th scope="col">Estado</th>
+					<th scope="col">Email</th>
+					<th scope="col">N° Contacto</th>
 					<th scope="col">id Historial Psicosocial</th>
                     <th scope="col">ACCIONES</th>
 				</tr>
@@ -42,9 +45,12 @@
 				<tr th:each="cita : ${citas}">
 					<td th:text="${cita.idCitas}"></td>
 					<td th:text="${cita.persona != null ? cita.persona.idPersonas : 'N/A'}"></td>
+					<td th:text="${cita.persona != null ? cita.persona.numeroDocumento : 'N/A'}"></td>
 					<td th:text="${cita.persona != null ? cita.persona.primer_nombre +' '+ cita.persona.primer_apellido : 'N/A'}"></td>
 					<td th:text="${cita.fecha}"></td>
 					<td th:text="${cita.estado}"></td>
+					<td th:text="${cita.persona != null ? cita.persona.email : 'N/A'}"></td>
+					<td th:text="${cita.persona != null ? cita.persona.numeroContacto : 'N/A'}"></td>
 					<td th:text="${cita.historialPsicosocial != null ? cita.historialPsicosocial.idHistorial_Psicosocial : 'N/A'}"></td>
 					<td>
 						<br>

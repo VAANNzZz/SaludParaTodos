@@ -7,26 +7,154 @@
     <link rel="stylesheet" href="../static/register.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
 
-      /* Estilos para el botón de volver al login */
-      .btn-login {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        z-index: 999;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        font-size: 16px;
-        border-radius: 5px;
-        text-decoration: none;
-      }
-      
+        /* Contenedor de botones */
+        .button-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            display: flex;
+            gap: 15px; /* Espacio entre los botones */
+        }
+
+        /* Estilo de los botones */
+        .btn-login, .btn-Rol {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-login:hover, .btn-Rol:hover {
+            background-color: #0056b3;
+            cursor: pointer;
+        }
+
+        .form-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        span {
+            color: red;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        /* Estilos para la tarjeta */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 30px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card h1 {
+            font-size: 28px;
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #00408b;
+            border-color: #00408b;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para el footer */
+        .box-footer {
+            margin-top: 20px;
+        }
+
+        /* Responsive: Para pantallas más pequeñas */
+        @media (max-width: 768px) {
+            .card {
+                padding: 20px;
+            }
+
+            .card h1 {
+                font-size: 24px;
+            }
+
+            .form-control {
+                font-size: 14px;
+            }
+
+            .btn-primary {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <a href="/login" class="btn-login" aria-label="Volver al login">Volver al Login</a>
+    <!-- Contenedor para los botones -->
+    <div class="button-container">
+        <!-- Botón Volver al Login -->
+        <a th:href="@{/login}" class="btn-login" aria-label="Volver al login">Volver al Login</a>
+
+        <!-- Botón Agregar Rol -->
+        <a th:href="@{/listaRol}" class="btn-Rol" aria-label="Agregar Rol">Lista Rol</a> 
+    </div>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8 col-sm-10">
@@ -125,7 +253,7 @@
                                 <label for="roles">Rol</label>
                                 <select th:field="*{rol}" name="roles" id="roles" class="form-control" aria-label="Seleccionar rol">
                                     <option th:each="rol : ${roles}" 
-                                            th:if="${rol.nombre_rol == 'aprendiz'}"
+                                            th:if="${rol.nombre_rol}"
                                             th:value="${rol.idRol}" 
                                             th:text="${rol.nombre_rol}"></option>
                                 </select>

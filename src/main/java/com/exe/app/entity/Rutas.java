@@ -152,7 +152,7 @@ public class Rutas {
     public String savePersona(@ModelAttribute("persona") Persona persona) {
         personaService.saveOrUpdate(persona);
         System.out.println("Se registró la Persona exitosamente!" + persona);
-        return "redirect:/listaPersonaAprendices";
+        return "redirect:/personas/aprendices";
     }
 
     // Método para editar persona
@@ -178,28 +178,28 @@ public class Rutas {
     @GetMapping("/eliminarpersona/{idPersonas}")
     public String eliminarpersona(Model model, @PathVariable Long idPersonas) {
         personaService.eliminarpersona(idPersonas);
-        return "redirect:/personas";
+        return "redirect:/personas/aprendices";
     }
 
     // mostrar roles
-    @GetMapping("/rol")
+    @GetMapping("/listaRol")
     public String mostrarRoles(Model model) {
         List<Rol> rol = rolService.getRol();
         model.addAttribute("roles", rol);
         return "/listaRol";
     }
 
-    @GetMapping("/agregarRol")
+    @GetMapping("/listaRol/agregarRol")
     public String AgregarRoles(ModelMap model) {
         model.addAttribute("rol", new Rol());
-        return "/agregarRol";
+        return "/AgregarRol";
     }
 
-    @PostMapping("/AgregarRol")
+    @PostMapping("/listaRol/AgregarRol")
     public String saveRol(@ModelAttribute("rol") Rol rol) {
         rolService.saveOrUpdate(rol);
         System.out.println("Se registró la Persona exitosamente!" + rol);
-        return "redirect:/rol";
+        return "redirect:/listaRol";
     }
 
     @Autowired
@@ -216,21 +216,66 @@ public class Rutas {
     @GetMapping("/agregarCita")
     public String agregarCita(ModelMap model) {
         model.addAttribute("cita", new Cita());
-        model.addAttribute("historial_psicosocial", historialPsicosocialService.gethistorialPsicosocial()); // Asegúrate
-                                                                                                            // de tener
-                                                                                                            // este
-                                                                                                            // método
-        model.addAttribute("personas", personaService.getPersona()); // Asegúrate de tener este método
+        model.addAttribute("historial_psicosocial", historialPsicosocialService.gethistorialPsicosocial()); // Historial
+        model.addAttribute("personas", personaService.getPersona()); // Lista de personas para llenar el formulario
         return "AgregarCita";
     }
 
-    // este metodo Guarda la informacion en la BD
     @PostMapping("/agregarCita")
-    public String saveCita(@ModelAttribute("cita") Cita cita) {
-        citaService.saveOrUpdate(cita);
-        System.out.println("Se registró la Persona exitosamente!" + cita);
+    public String saveCita(@ModelAttribute("cita") Cita cita, @RequestParam("numeroDocumento") String numeroDocumento) {
+        // Buscar la persona por número de documento usando el método con Optional
+        Optional<Persona> optionalPersona = personaService.obtenerPersonaPorNumeroDocumento(numeroDocumento);
+
+        if (optionalPersona.isPresent()) {
+            // Asociar la persona a la cita si existe
+            cita.setPersona(optionalPersona.get());
+            citaService.saveOrUpdate(cita);
+            System.out.println("Cita registrada exitosamente: " + cita);
+        } else {
+            System.out.println("No se encontró una persona con el número de documento: " + numeroDocumento);
+            // Manejar el caso donde no se encuentra la persona
+            return "redirect:/agregarCita?error=No se encontró una persona con ese número de documento";
+        }
+
         return "redirect:/citas";
     }
+
+    // Mostrar el formulario de edición de cita
+    @GetMapping("/editarcita/{idCita}")
+    public String editarCita(@PathVariable("idCita") Long idCita, ModelMap model) {
+        Optional<Cita> optionalCita = citaService.getCitaById(idCita);
+
+        if (optionalCita.isPresent()) {
+            Cita cita = optionalCita.get();
+            model.addAttribute("cita", cita); // Agregar la cita encontrada al modelo
+            model.addAttribute("personas", personaService.getPersona()); // Lista de personas
+            model.addAttribute("historial_psicosocial", historialPsicosocialService.gethistorialPsicosocial()); // Historial
+            return "/editarcita"; // Retorna la vista del formulario de edición
+        } else {
+            System.out.println("No se encontró una cita con el ID: " + idCita);
+            return "redirect:/citas?error=No se encontró la cita"; // Redirige con un mensaje de error si no se
+                                                                   // encuentra la cita
+        }
+    }
+
+    // Guardar los cambios de la cita editada
+@PostMapping("/editarcita")
+public String actualizarCita(@ModelAttribute("cita") Cita cita, @RequestParam("numeroDocumento") String numeroDocumento) {
+    // Buscar la persona asociada por número de documento
+    Optional<Persona> optionalPersona = personaService.obtenerPersonaPorNumeroDocumento(numeroDocumento);
+
+    if (optionalPersona.isPresent()) {
+        // Asociar la persona a la cita y guardar
+        cita.setPersona(optionalPersona.get());
+        citaService.saveOrUpdate(cita);
+        System.out.println("Cita actualizada exitosamente: " + cita);
+    } else {
+        System.out.println("No se encontró una persona con el número de documento: " + numeroDocumento);
+        return "redirect:/editarCita/" + cita.getIdCitas() + "?error=No se encontró una persona con ese número de documento";
+    }
+
+    return "redirect:citas";
+}
 
     @GetMapping("/eliminarcita/{idCitas}")
     public String eliminarcita(Model model, @PathVariable Long idCitas) {
@@ -279,13 +324,6 @@ public class Rutas {
     public String mostrarCanalOtros(Model model) {
         return "canalOtros";
     }
-
-    /*
-     * @GetMapping("/tareasAprendices")
-     * public String mostrarTareasAprendices(Model model){
-     * return "tareasAprendices";
-     * }
-     */
 
     @GetMapping("/tareasOrientadores")
     public String mostrarTareasOrientadores(Model model) {

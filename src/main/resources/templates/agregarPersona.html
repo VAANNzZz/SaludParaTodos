@@ -13,7 +13,7 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/personas}">Ver listado de personas</a>
+                        <a class="nav-link" th:href="@{/personas/aprendices}">Ver listado de aprendices</a>
                     </li>
                 </ul>
             </div>
@@ -21,78 +21,97 @@
         <div class="container mt-3">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-                    <h1 class="text-center">Agregar Persona</h1>
+                    <h1 class="text-center">Agregar Aprendiz</h1>
                     <div class="card-body">
                         <form th:action="@{/Agregarpersona}" th:object="${persona}" method="POST">
 
                             <div class="form-group">
                                 <label for="primer_nombre">Primer nombre</label>
-                                <input type="text" name="primer_nombre" th:field="*{primer_nombre}"
-                                       class="form-control"
-                                       placeholder="Obligatorio" 
-                                       required/>
+                                <input type="text" name="primer_nombre" th:field="*{primer_nombre}" class="form-control" 
+                                       id="primer_nombre" placeholder="Obligatorio" required aria-required="true"
+                                       pattern="[a-zA-Z ]{1,10}" title="Solo letras, máximo 10 caracteres">
                             </div>
 
+                            <!-- Segundo nombre -->
                             <div class="form-group">
                                 <label for="segundo_nombre">Segundo nombre</label>
-                                <input type="text" name="segundo_nombre" th:field="*{segundo_nombre}"
-                                       class="form-control"
-                                       placeholder="Opcional" />
+                                <input type="text" name="segundo_nombre" th:field="*{segundo_nombre}" class="form-control" 
+                                       id="segundo_nombre" placeholder="Opcional"
+                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
                             </div>
 
+                            <!-- Primer apellido -->
                             <div class="form-group">
                                 <label for="primer_apellido">Primer apellido</label>
-                                <input type="text" name="primer_apellido" th:field="*{primer_apellido}"
-                                       class="form-control"
-                                       placeholder="Obligatorio" 
-                                       required />
+                                <input type="text" name="primer_apellido" th:field="*{primer_apellido}" class="form-control" 
+                                       id="primer_apellido" placeholder="Obligatorio" required aria-required="true"
+                                       pattern="[a-zA-Z ]{1,10}" title="Solo letras, máximo 10 caracteres">
                             </div>
 
+                            <!-- Segundo apellido -->
                             <div class="form-group">
                                 <label for="segundo_apellido">Segundo apellido</label>
-                                <input type="text" name="segundo_apellido" th:field="*{segundo_apellido}"
-                                       class="form-control"
-                                       placeholder="Opcional" />
+                                <input type="text" name="segundo_apellido" th:field="*{segundo_apellido}" class="form-control" 
+                                       id="segundo_apellido" placeholder="Opcional"
+                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
+                            </div>
 
+                            <!-- Número de documento -->
                             <div class="form-group">
-                                        <label for="numero_documento">N° Documento</label>
-                                        <input type="number" name="numero_documento" th:field="*{numero_documento}"
-                                               class="form-control"
-                                               placeholder="Obligatorio" 
-                                               required/>
-                            </div>  
+                                <label for="numero_documento">N° Documento</label>
+                                <input type="number" name="numero_documento" th:field="*{numeroDocumento}" class="form-control" 
+                                       id="numero_documento" placeholder="Obligatorio" required aria-required="true"
+                                       min="100000" max="9999999999" 
+                                       title="Debe tener entre 7 y 10 dígitos"
+                                       inputmode="numeric"
+                                       oninput="this.value = this.value.replace(/e/gi, '')">
+                            </div>
 
+                            <!-- Número de contacto -->
                             <div class="form-group">
-                                <label for="numero_contacto">Numero de contacto</label>
-                                <input type="number" name="numero_contacto" th:field="*{numero_contacto}"
-                                       class="form-control"
-                                       placeholder="Obligatorio"
-                                       required/>
-                            </div> 
+                                <label for="numeroContacto">Número de contacto</label>
+                                <input type="tel" name="numeroContacto" th:field="*{numeroContacto}" class="form-control" 
+                                       id="numeroContacto" placeholder="Obligatorio" required aria-required="true"
+                                       pattern="(300|301|302|303|304|305|310|311|312|313|314|320|321|322|323|324)\d{7}" 
+                                       title="Debe comenzar con uno de los prefijos permitidos y tener 10 dígitos"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            </div>
 
+                            <!-- Correo -->
                             <div class="form-group">
                                 <label for="email">Correo</label>
-                                <input type="email" name="email" th:field="*{email}"
-                                       class="form-control"
-                                       placeholder="Obligatorio"
-                                       required/>
+                                <input type="email" name="email" th:field="*{email}" class="form-control" 
+                                       id="email" placeholder="Obligatorio" required aria-required="true"
+                                       pattern="^[a-zA-Z0-9]+@(gmail\.com|hotmail\.com)$"
+                                       maxlength="45"
+                                       title="Debe tener entre 1 a 35 caracteres y ser un correo de gmail o hotmail">
                             </div>
 
+                            <!-- Contraseña -->
                             <div class="form-group">
                                 <label for="contraseña">Contraseña</label>
-                                <input type="password" name="contraseña" th:field="*{contraseña}"
-                                class="form-control"
-                                placeholder="Obligatorio"
-                                required>
+                                <div class="input-group">
+                                    <input type="password" name="contraseña" th:field="*{contraseña}" class="form-control" 
+                                           id="contraseña" placeholder="Obligatorio" required minlength="8" aria-required="true"
+                                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}"
+                                           title="La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula y un número">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                            👁️
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
+                            <!-- Roles -->
                             <div class="form-group">
                                 <label for="roles">Rol</label>
-                                <select style="height: 40px;" th:field="*{rol}" name="roles" class="form-control">
-                                    <option th:each="rol : ${roles}" th:value="${rol.idRol}" th:text="${rol.nombre_rol}">
-                                    </option>
+                                <select th:field="*{rol}" name="roles" id="roles" class="form-control" aria-label="Seleccionar rol">
+                                    <option th:each="rol : ${roles}" 
+                                            th:if="${rol.nombre_rol} != 'Psicosocial'"
+                                            th:value="${rol.idRol}" 
+                                            th:text="${rol.nombre_rol}"></option>
                                 </select>
-        
                             </div>
                            
                             <div class="box-footer">
@@ -103,6 +122,17 @@
                 </div>
             </div>
         </div>
+        <script>
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordField = document.getElementById('contraseña');
+    
+            togglePassword.addEventListener('click', () => {
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+                togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+            });
+        </script>
+    
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

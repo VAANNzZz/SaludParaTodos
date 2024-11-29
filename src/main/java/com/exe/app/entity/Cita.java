@@ -21,8 +21,8 @@ public class Cita {
 
     public enum Estado {
         PENDIENTE,
-        COMPLETADA,
-        CANCELADA
+        AVANZANDO,
+        COMPLETADA
     }
 
     @Id

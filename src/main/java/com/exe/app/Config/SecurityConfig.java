@@ -24,13 +24,14 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
     return httpSecurity
              .csrf(csrf -> csrf.disable())
                          .authorizeHttpRequests(auth -> auth
-                         .requestMatchers(HttpMethod.POST, "/email/send", "/restablecerContraseña", "/resetpassword").permitAll()
+                         .requestMatchers(HttpMethod.POST, "/email/send", "/restablecerContraseña", "/resetpassword", "/AgregarRol").permitAll()
                         // Acceso público
-                        .requestMatchers("/register", "/login", "/static/**", "/public/**", "/Logo.png", "/resurces", "/Agregarpersona", "/templates", "/templates/**", "/olvidecontraseña", "/getPersona","/restablecerContraseña/**", "/restablecerContraseña").permitAll()
+                        .requestMatchers("/register", "/listaRol", "/listaRol/**","/login", "/static/**", 
+                        "/public/**", "/Logo.png", "/resurces", "/Agregarpersona", "/templates", 
+                        "/templates/**", "/olvidecontraseña", "/getPersona","/restablecerContraseña/**", "/restablecerContraseña",
+                        "/listaRol/agregarRol").permitAll()
                         // Acceso solo para administradores
-                        .requestMatchers("/admin/**", "/personas", "/canalOrientadores", "/historial").hasRole("administrador")
-                        // Acceso solo para usuarios
-                        .requestMatchers("/user/**", "/citas", "/agregarCita", "/historial").hasRole("user")
+                        .requestMatchers( "/personas", "/personas/**", "/editaraprendiz", "/editaraprendiz/**", "/editarcita", "/editarcita/**").hasRole("Psicosocial")
                         // Acceso general para usuarios autenticados
                         .anyRequest().authenticated()
                         )
