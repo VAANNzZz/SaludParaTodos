@@ -97,29 +97,4 @@ public class PersonaService{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByRol'");
     }
-
-    
-
-    /* @Autowired
-    private PersonaRepository personaRepository;
-
-    public String generateVerificationCode(String email) {
-        String code = UUID.randomUUID().toString().substring(0, 6); // Código de 6 caracteres
-        User user = userRepository.findByEmail(email);
-        user.setVerificationCode(code);
-        userRepository.save(user);
-        return code;
-    }
-
-    public boolean emailExists(String email) {
-        return userRepository.findByEmail(email) != null;
-    }
-
-    public boolean verifyCode(String email, String code) {
-        User user = userRepository.findByEmail(email);
-        return user != null && code.equals(user.getVerificationCode());
-    } */
-
-
-
 }

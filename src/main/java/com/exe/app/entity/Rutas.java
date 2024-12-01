@@ -21,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.exe.app.repository.PersonaRepository;
 import com.exe.app.services.CitaService;
-import com.exe.app.services.HistorialPsicosocialService;
 import com.exe.app.services.PersonaDTO;
 import com.exe.app.services.PersonaService;
 import com.exe.app.services.RolService;
@@ -108,6 +107,13 @@ public class Rutas {
         return "listaPersonaAprendices";
     }
 
+    @GetMapping("/personas/psicosociales")
+    public String mostraPsicosociales(Model model) {
+        List<Persona> personas = personaService.getPersona();
+        model.addAttribute("personas", personas);
+        return "listaPersonaPsicosociales";
+    }
+
     // este metodo brinda informacion de la persona en base a su email
     @RequestMapping(value = "getPersona", method = RequestMethod.GET)
     public @ResponseBody Persona getPersona(@RequestParam("email") String email) {
@@ -174,6 +180,23 @@ public class Rutas {
         return "redirect:/personas/aprendices";
     }
 
+    @GetMapping("/editarpsicosocial/{idPersonas}")
+    public String editarPsicosocial(@PathVariable("idPersonas") Long idPersonas, ModelMap Model) {
+        Model.addAttribute("persona", new Persona());
+        Optional<Persona> personas = personaService.getPersonaById(idPersonas);
+        Model.addAttribute("persona", personas.orElse(null));
+        List<Rol> roles = rolService.getRol();
+        Model.addAttribute("roles", roles);
+        return "/editarPsicosocial";
+    }
+
+    @PostMapping("/editarPsicosocial")
+    public String metodoEditarPsicosocial(PersonaDTO personaDTO) {
+        personaService.updatePersona(personaDTO);
+
+        return "redirect:/personas/psicosociales";
+    }
+
     // Eliminar
     @GetMapping("/eliminarpersona/{idPersonas}")
     public String eliminarpersona(Model model, @PathVariable Long idPersonas) {
@@ -216,7 +239,6 @@ public class Rutas {
     @GetMapping("/agregarCita")
     public String agregarCita(ModelMap model) {
         model.addAttribute("cita", new Cita());
-        model.addAttribute("historial_psicosocial", historialPsicosocialService.gethistorialPsicosocial()); // Historial
         model.addAttribute("personas", personaService.getPersona()); // Lista de personas para llenar el formulario
         return "AgregarCita";
     }
@@ -249,7 +271,6 @@ public class Rutas {
             Cita cita = optionalCita.get();
             model.addAttribute("cita", cita); // Agregar la cita encontrada al modelo
             model.addAttribute("personas", personaService.getPersona()); // Lista de personas
-            model.addAttribute("historial_psicosocial", historialPsicosocialService.gethistorialPsicosocial()); // Historial
             return "/editarcita"; // Retorna la vista del formulario de edición
         } else {
             System.out.println("No se encontró una cita con el ID: " + idCita);
@@ -283,50 +304,8 @@ public String actualizarCita(@ModelAttribute("cita") Cita cita, @RequestParam("n
         return "redirect:/citas";
     }
 
-    @Autowired
-    HistorialPsicosocialService historialPsicosocialService;
-
-    @GetMapping("/historial")
-    public String mostrarHistorialPsicosocial(Model model) {
-        List<HistorialPsicosocial> historialPsicosocial = historialPsicosocialService.gethistorialPsicosocial();
-        model.addAttribute("historial_psicosocial", historialPsicosocial);
-        return "/listahistorialpsicosocial";
-    }
-
-    @GetMapping("/eliminarhistorialPsicosocial/{idHistorial_Psicosocial}")
-    public String eliminarhistorialpsicosocial(@PathVariable("idHistorial_Psicosocial") Long idHistorial_Psicosocial,
-            RedirectAttributes redirectAttributes) {
-        historialPsicosocialService.eliminarhistorialpsicosocial(idHistorial_Psicosocial);
-        redirectAttributes.addFlashAttribute("mensaje", "historial psicosocial eliminada con éxito");
-        return "redirect:/historial";
-    }
-
-    @GetMapping("/canalAtencion")
-    public String mostrarCanalAtencion(Model model) {
-        // Aquí puedes agregar atributos al modelo si es necesario
-        // model.addAttribute("atributo", valor);
-
-        // Devuelve el nombre de la vista que quieres mostrar
-        return "canalAtencion"; // Asegúrate de que esta vista exista en tu carpeta de plantillas
-    }
-
-    @GetMapping("/canalAprendices")
-    public String mostrarCanalAprendices(Model model) {
-        return "canalAprendices";
-    }
-
     @GetMapping("/canalOrientadores")
     public String mostrarCanalOrientadores(Model model) {
         return "canalOrientadores";
-    }
-
-    @GetMapping("/canalOtros")
-    public String mostrarCanalOtros(Model model) {
-        return "canalOtros";
-    }
-
-    @GetMapping("/tareasOrientadores")
-    public String mostrarTareasOrientadores(Model model) {
-        return "tareasOrientadores";
     }
 }

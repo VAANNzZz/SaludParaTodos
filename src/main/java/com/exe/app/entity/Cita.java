@@ -2,6 +2,8 @@ package com.exe.app.entity;
 
 import java.time.LocalDate; // Cambiado a LocalDateTime
 
+import com.exe.app.entity.Cita.Tipocita;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,6 +27,11 @@ public class Cita {
         COMPLETADA
     }
 
+    public enum Tipocita {
+        VIRTUAL,
+        PRESENCIAL
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCitas", insertable = false, updatable = false)
@@ -33,16 +40,13 @@ public class Cita {
     @Column(name = "fecha", nullable = false) // Añadido nullable = false
     private LocalDate fecha; // Cambiado a LocalDateTime
 
-    /*@Column(name = "descripcion_cita", length = 255, nullable = false)
-    private String descripcion_cita;*/
-
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private Estado estado = Estado.PENDIENTE;
 
-    @ManyToOne
-    @JoinColumn(name = "idHistorial_Psicosocial")
-    private HistorialPsicosocial historialPsicosocial;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipoCita", nullable = false)
+    private Tipocita tipoCita = Tipocita.PRESENCIAL;
 
     @ManyToOne
     @JoinColumn(name = "idPersonas")
@@ -52,11 +56,11 @@ public class Cita {
     }
    
 
-    public Cita(long idCitas, LocalDate fecha, Estado estado, HistorialPsicosocial historialPsicosocial, Persona persona) {
+    public Cita(long idCitas, LocalDate fecha, Estado estado, Tipocita tipoCita, Persona persona) {
         this.idCitas = idCitas;
         this.fecha = fecha;
         this.estado = estado;
-        this.historialPsicosocial = historialPsicosocial;
+        this.tipoCita = tipoCita;
         this.persona = persona;
     }
 
@@ -85,12 +89,12 @@ public class Cita {
         this.estado = estado;
     }
 
-    public HistorialPsicosocial getHistorialPsicosocial() {
-        return this.historialPsicosocial;
+    public Tipocita getTipoCita() {
+        return this.tipoCita;
     }
 
-    public void setHistorialPsicosocial(HistorialPsicosocial historialPsicosocial) {
-        this.historialPsicosocial = historialPsicosocial;
+    public void setTipoCita(Tipocita tipoCita) {
+        this.tipoCita = tipoCita;
     }
 
     public Persona getPersona() {

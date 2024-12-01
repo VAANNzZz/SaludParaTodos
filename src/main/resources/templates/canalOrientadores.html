@@ -6,23 +6,43 @@
     <link rel="stylesheet" href="/index.css">
     <title>Aprendices - Salud para Todos</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+   <style>
+    /* Estilo para el botón de inicio */
+.nav a {
+    text-decoration: none;
+    color: #ffffff; /* Color del texto */
+    background-color: #23cdda; /* Fondo del botón */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: bold; /* Fuente en negrita */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animaciones */
+}
+
+/* Hover para el botón */
+.nav a:hover {
+    background-color: #1a9ba2; /* Color de fondo al pasar el ratón */
+    transform: scale(1.05); /* Efecto de zoom */
+}
+
+/* Estado activo o seleccionado */
+.nav a.active {
+    background-color: #208ca7; /* Color para el estado activo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+   </style>
 </head>
 <body>
 
     <header id="header">
         <img src="/Logo.png" alt="Logo" class="logo">
         <nav>
-            <ul class="nav">
-                <li><a th:href="@{/index}">Inicio</a></li>
-                <li><a th:href="@{/canalAprendices}">Aprendices</a></li>
-                <li><a th:href="@{/canalAtencion}">Contacto</a></li>
-                <li><a th:href="@{/canalOtros}">Otros</a></li>
-                
-            </ul>
+            <form class="logout" th:action="@{/index}">
+            <button class="buttonLogout">Inicio</button>
+        </form>
         </nav>
-        <form class="search-form" action="#" method="get">
-            <input type="text" placeholder="Buscar..." aria-label="Buscar">
-            <button type="submit">Buscar</button>
+        <form class="logout" th:action="@{/logout}" method="post">
+            <button type="submit" class="buttonLogout">Cerrar Sesión</button>
         </form>
     </header>
 
@@ -50,14 +70,14 @@
                     </a>
                 </div>
                 <div class="novedad">
-                    <a th:href="@{/historial}">
+                    <a th:href="@{https://drive.google.com/drive/folders/1LwXD4XNkPsd1aENd8yqNph-mYGSrhMet?usp=sharing}">
                         <img src="CITAS.jpg" alt="Historial psicosocial" />
                         <h3> HISTORIAL PSICOSOCIAL </h3>
                         <p> Haz click para ver historial psicosocial</p>
                     </a>
                 </div>
                 <div class="novedad">
-                    <a th:href="@{/tareasOrientadores}">
+                    <a th:href="@{https://drive.google.com/drive/folders/1Ebua_wo_PvsKiY4g0S_0krx9pAF8M0BC?usp=sharing}">
                         <img src="TAREA.jpg" alt="Tareas" />
                         <h3>TAREAS</h3>
                         <p>Haz click para ver el apartado de tareas</p>
@@ -70,6 +90,14 @@
                     <p> Haz click para ver los Aprendices</p>
                     </a>
                 </div>
+                <div class="novedad">
+                    <a th:href="@{/personas/psicosociales}">
+                    <img src="PSICOSOCIAL.png" alt="Psicosocial"
+                    <h3>Psicosocial</h3>
+                    <p> Haz click para ver los Orientadores psicosociales</p>
+                    </a>
+                </div>
+                
             </div>
         </section>
     </main>

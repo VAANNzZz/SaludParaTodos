@@ -19,9 +19,7 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-3 d-flex flex-row">
-                <a th:href="@{/index}" class="btn btn-success btn-sm mb-3 mr-2">Volver al Inicio</a>
-				<!-- <a href="#" class="btn btn-success btn-sm mb-3 mr-2">REPORTE EN EXCEL</a>
-				<a href="#" class="btn btn-danger btn-sm mb-3">REPORTE EN PDF</a> -->
+                <a th:href="@{/canalOrientadores}" class="btn btn-success btn-sm mb-3 mr-2">Volver al Canal</a>
 				<a th:href="@{/agregarCita}" class="btn btn-primary btn-sm mb-3 mr-2">Agregar Cita</a>
 			</div>
 		</div>
@@ -35,9 +33,9 @@
 					<th scope="col">Nombre</th>
 					<th scope="col">Fecha</th>
                     <th scope="col">Estado</th>
+					<th scope="col">Tipo de cita</th>
 					<th scope="col">Email</th>
 					<th scope="col">N° Contacto</th>
-					<th scope="col">id Historial Psicosocial</th>
                     <th scope="col">ACCIONES</th>
 				</tr>
 			</thead>
@@ -49,17 +47,17 @@
 					<td th:text="${cita.persona != null ? cita.persona.primer_nombre +' '+ cita.persona.primer_apellido : 'N/A'}"></td>
 					<td th:text="${cita.fecha}"></td>
 					<td th:text="${cita.estado}"></td>
+					<td th:text="${cita.tipoCita}"></td>
 					<td th:text="${cita.persona != null ? cita.persona.email : 'N/A'}"></td>
 					<td th:text="${cita.persona != null ? cita.persona.numeroContacto : 'N/A'}"></td>
-					<td th:text="${cita.historialPsicosocial != null ? cita.historialPsicosocial.idHistorial_Psicosocial : 'N/A'}"></td>
 					<td>
 						<br>
 						<a class="btn btn-info"
-						   th:href="@{/editarcita/{idCitas}(idCitas=${cita.idCitas})}">Editar cita</a>
+						   th:href="@{/editarcita/{idCitas}(idCitas=${cita.idCitas})}">Editar</a>
 						<br>
 						<br>
 						<a class="btn btn-danger"
-						   th:href="@{/eliminarcita/{idCitas}(idCitas=${cita.idCitas})}">Cancelar cita</a>
+						   th:href="@{/eliminarcita/{idCitas}(idCitas=${cita.idCitas})}">Cancelar</a>
 					</td>
 				</tr>
 			</tbody>

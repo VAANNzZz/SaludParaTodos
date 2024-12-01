@@ -20,7 +20,7 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-3 d-flex flex-row">
-				<a th:href="@{/index}" class="btn btn-success btn-sm mb-3 mr-2">Volver al Inicio</a>
+				<a th:href="@{/canalOrientadores}" class="btn btn-success btn-sm mb-3 mr-2">Volver al Canal</a>
 				<a th:href="@{/AgregarPersona}" class="btn btn-primary btn-sm mb-3 mr-2">Agregar Psicosocial</a>
 			</div>
 		</div>
@@ -53,7 +53,7 @@
 					<td th:text="${persona.email != null ? persona.email : 'N/A'}"></td>
 					<td th:text="${persona.rol != null ? persona.rol.nombre_rol : 'N/A'}"></td>
 					<td>
-						<a class="btn btn-info" th:href="@{/editaraprendiz/{idPersonas}(idPersonas=${persona.idPersonas})}">EDITAR</a>
+						<a class="btn btn-info" th:href="@{/editarpsicosocial/{idPersonas}(idPersonas=${persona.idPersonas})}">EDITAR</a>
 						<br>
 						<br>
 						<a class="btn btn-danger" th:href="@{/eliminarpersona/{idPersonas}(idPersonas=${persona.idPersonas})}">ELIMINAR</a>

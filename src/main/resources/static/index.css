@@ -22,6 +22,8 @@ h1, h2, h3, h4, h5, h6, p, a, button {
     font-family: 'Poppins', sans-serif;
 }
 
+
+
 /* Search Form */
 .search-form input {
     padding: 10px;
@@ -49,64 +51,6 @@ h1, h2, h3, h4, h5, h6, p, a, button {
 #main-title {
     text-align: center;
     margin: 20px 0;
-}
-
-/* Navegación */
-.nav-container {
-    display: flex;
-    justify-content: center;
-}
-
-.nav {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-}
-
-.nav li {
-    position: relative; /* Necesario para posicionar los submenús */
-}
-
-.nav a {
-    text-decoration: none;
-    color: #000;
-    font-weight: bold;
-    padding: 10px 15px;
-    display: block;
-}
-
-/* Ocultar el submenú por defecto */
-.nav .dropdown {
-    display: none;
-    position: absolute;
-    top: 100%; /* Posiciona el submenú debajo del elemento principal */
-    left: 0;
-    background-color: #f0f0f5;
-    padding: 10px 0;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.nav .dropdown li {
-    width: 150px; /* Opcional: puedes ajustar el ancho del submenú */
-    list-style: none;
-}
-
-.nav .dropdown a {
-    font-weight: normal;
-    color: #333;
-    padding: 8px 15px;
-}
-
-/* Mostrar el submenú al pasar el cursor */
-.nav li:hover > .dropdown {
-    display: block;
-}
-
-/* Opcional: estilos al pasar el cursor por los enlaces */
-.nav a:hover {
-    background-color: #007bff;
-    color: white;
 }
 
 .auth-buttons {

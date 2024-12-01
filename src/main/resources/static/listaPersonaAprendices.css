@@ -1,27 +1,25 @@
 body {
-    overflow-y: scroll;
-    overflow-x: hidden;
     margin: 0;
     padding: 0;
-    background-image: url(./fondopsicologia.jpg);
-    background-size: cover;
+    background-image: url(./fondopsicologia.jpg); /* Fondo de la página */
+    background-size: cover; /* Asegura que el fondo cubra toda la ventana */
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
-    width: 100vw; /* Cambié a 100vw para ocupar toda la anchura de la ventana */
-    display: flex; /* Usamos flexbox para alinear el contenido */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: flex-start; /* Alinea el contenido hacia la parte superior */
+    min-height: 100vh; /* Mínima altura de la ventana */
+    display: flex;
+    align-items: left; /* Centrar el contenido verticalmente */
+    justify-content: center; /* Centrar el contenido horizontalmente */
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo semitransparente */
     padding: 20px;
     border-radius: 15px;
-    width: 80%; /* Ancho de la tabla en porcentaje, puedes ajustar este valor */
-    max-width: 1200px; /* Máximo ancho para la tabla */
-    margin-top: 30px; /* Espacio desde la parte superior */
+    width: 90%; /* Ocupa el 90% del ancho de la ventana */
+    max-width: 1200px; /* No excede un máximo de 1200px */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para resaltar el contenedor */
 }
+
 
 h1 {
     text-align: center;

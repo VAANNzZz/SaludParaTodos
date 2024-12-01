@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Agregar Tarea</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/agregarTarea.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/visualizarTarea}">Ver listado de tareas</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                <h1 class="text-center">Agregar Tarea</h1>
+                <div class="card-body">
+                    <form th:action="@{/tareas}" th:object="${tarea}" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="form-group">
+                            <label for="numeroDocumento">Número de Documento</label>
+                            <input type="text" name="numeroDocumento" th:field="*{numeroDocumento}"
+                                class="form-control"
+                                placeholder="Obligatorio" 
+                                required/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <input type="text" name="descripcion" th:field="*{descripcion}"
+                                class="form-control"
+                                placeholder="Obligatorio" 
+                                required/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fechaEntrega">Fecha de Entrega</label>
+                            <input type="date" name="fechaEntrega" th:field="*{fechaEntrega}"
+                                class="form-control"
+                                placeholder="Obligatorio" 
+                                required/>
+                        </div>
+                        
+                        <div class="form-group"> 
+                            <label for="estado">Estado</label> 
+                            <select name="estado" th:field="*{estado}" class="form-control" required> 
+                                <option value="Pendiente">Pendiente</option> 
+                                <option value="Completado">Completado</option> 
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="material">Material entregado</label>
+                            <input type="file" name="material" th:field="*{material}"
+                                class="form-control"
+                                placeholder="Opcional"/>
+                        </div>
+                        
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/static/JS/formularios.js"></script>
+</body>
+</html>

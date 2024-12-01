@@ -1,87 +1,48 @@
-
 body {
-    overflow-y: auto;
-overflow-x: hidden;
-margin: 0;
-padding: 0;
-background-image: url(./fondopsicologia.jpg);
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-height: 100vh;
-width: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url(./fondopsicologia.jpg); /* Fondo de la página */
+    background-size: cover; /* Asegura que el fondo cubra toda la ventana */
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Mínima altura de la ventana */
+    display: flex;
+    align-items: left; /* Centrar el contenido verticalmente */
+    justify-content: center; /* Centrar el contenido horizontalmente */
 }
-/* Contenedor principal */
+
 .container {
-    background-color: rgba(255, 255, 255, 0.7); /* Fondo semitransparente blanco */
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo semitransparente */
     padding: 20px;
     border-radius: 15px;
-    margin-top: 30px;
+    width: 90%; /* Ocupa el 90% del ancho de la ventana */
+    max-width: 1200px; /* No excede un máximo de 1200px */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para resaltar el contenedor */
 }
 
 h1 {
     text-align: center;
-    color: rgba(0, 0, 0, 0.8); /* Texto en negro semi-transparente */
+    color: rgba(0, 0, 0, 0.8); /* Texto semitransparente */
 }
 
-/* Estilo de la tabla */
 .table {
-    color: rgba(0, 0, 0, 0.8); /* Texto en color negro semi-transparente */
-    background-color: rgba(255, 255, 255, 0.5); /* Fondo semitransparente blanco para la tabla */
+    color: rgba(0, 0, 0, 0.8); 
+    background-color: rgba(255, 255, 255, 0.5); 
     border-radius: 10px;
     overflow: hidden;
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
 }
 
-/* Celdas de la tabla */
 .table th, .table td {
-    vertical-align: middle;
     text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.1); /* Borde semi-transparente en las celdas */
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Cabecera de la tabla */
-.thead-dark th {
-    background-color: rgba(52, 58, 64, 0.8); /* Fondo de la cabecera semi-transparente oscuro */
-    border: 1px solid rgba(69, 77, 85, 0.8); /* Bordes en la cabecera semi-transparente */
-}
-
-/* Filas de la tabla */
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(255, 255, 255, 0.3); /* Alternancia de colores en filas con fondo blanco semi-transparente */
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .table-hover tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.4); /* Fila resaltada con mayor opacidad */
+    background-color: rgba(255, 255, 255, 0.4);
     transition: background-color 0.3s ease;
-}
-
-/* Botones */
-.btn {
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-.btn-info {
-    background-color: rgba(23, 162, 184, 0.8); /* Botón semi-transparente */
-    border: none;
-}
-
-.btn-danger {
-    background-color: rgba(220, 53, 69, 0.8); /* Botón semi-transparente */
-    border: none;
-}
-
-.btn-primary {
-    background-color: rgba(0, 123, 255, 0.8); /* Botón semi-transparente */
-    border: none;
-}
-
-.btn-success {
-    background-color: rgba(40, 167, 69, 0.8); /* Botón semi-transparente */
-    border: none;
-}
-
-.btn:hover {
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
 }
