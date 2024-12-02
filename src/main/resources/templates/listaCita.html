@@ -36,6 +36,7 @@
 					<th scope="col">Tipo de cita</th>
 					<th scope="col">Email</th>
 					<th scope="col">N° Contacto</th>
+					<th scope="col">Rol</th>
                     <th scope="col">ACCIONES</th>
 				</tr>
 			</thead>
@@ -50,6 +51,7 @@
 					<td th:text="${cita.tipoCita}"></td>
 					<td th:text="${cita.persona != null ? cita.persona.email : 'N/A'}"></td>
 					<td th:text="${cita.persona != null ? cita.persona.numeroContacto : 'N/A'}"></td>
+					<td th:text="${cita.persona.rol != null ? cita.persona.rol.nombre_rol : 'N/A'}"></td>
 					<td>
 						<br>
 						<a class="btn btn-info"

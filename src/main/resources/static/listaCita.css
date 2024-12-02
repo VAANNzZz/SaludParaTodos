@@ -16,7 +16,7 @@ body {
     padding: 20px;
     border-radius: 15px;
     width: 90%; /* Ocupa el 90% del ancho de la ventana */
-    max-width: 1200px; /* No excede un máximo de 1200px */
+    max-width: 1500px; /* No excede un máximo de 1200px */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para resaltar el contenedor */
 }
 
