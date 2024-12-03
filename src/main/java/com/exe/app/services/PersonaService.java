@@ -59,21 +59,24 @@ public class PersonaService{
         }
     }
 
-     // Métodos para verificar duplicados
-     public boolean existsBynumeroDocumento(String numeroDocumento) {
-        return personaRepository.existsByNumeroDocumento(numeroDocumento);
-    }
-
-    public boolean existsBynumeroContacto(String numeroContacto) {
-        return personaRepository.existsByNumeroContacto(numeroContacto);
-    }
-
     public boolean existsByEmail(String email) {
-        return personaRepository.existsByEmail(email);
+        return personaRepository.findByEmail(email).isPresent();
+    }
+
+    public boolean existsByNumeroDocumento(String numeroDocumento) {
+        return personaRepository.findByNumeroDocumento(numeroDocumento).isPresent();
+    }
+
+    public boolean existsByNumeroContacto(String numeroContacto) {
+        return personaRepository.findByNumeroContacto(numeroContacto).isPresent();
+    }
+
+    public void save(Persona persona) {
+        personaRepository.save(persona);
     }
 
 
-    public void actualizarContraseñasExistentes() {
+    public void actualizarContraseñasExistentes(){
         // Actualizar todas las contraseñas en la base de datos si no están cifradas
         List<Persona> personas = personaRepository.findAll();
         for (Persona persona : personas) {

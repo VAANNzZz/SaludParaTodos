@@ -29,7 +29,7 @@ public class Persona {
     @Column(name = "primer_apellido", nullable = false)
     private String primer_apellido;
 
-    @Column(name = "segundo_apelido")
+    @Column(name = "segundo_apellido")
     private String segundo_apellido;
 
     @Column(name = "numeroDocumento",unique = true, nullable = false)

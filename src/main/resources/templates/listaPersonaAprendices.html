@@ -23,7 +23,7 @@
 				<a th:href="@{/canalOrientadores}" class="btn btn-success btn-sm mb-3 mr-2">Volver al Canal</a>
 				<!-- <a href="#" class="btn btn-success btn-sm mb-3 mr-2">REPORTE EN EXCEL</a>
 				<a href="#" class="btn btn-danger btn-sm mb-3">REPORTE EN PDF</a> -->
-				<a th:href="@{/AgregarPersona}" class="btn btn-primary btn-sm mb-3 mr-2">Agregar aprendiz</a>
+				<a th:href="@{/AgregarAprendiz}" class="btn btn-primary btn-sm mb-3 mr-2">Agregar aprendiz</a>
 			</div>
 		</div>
 		<br>
@@ -46,14 +46,14 @@
 			<tbody>
 				<tr th:each="persona : ${personas}" th:if="${!#lists.contains(persona.rol.nombre_rol, 'Psicosocial')}">
 					<td th:text="${persona.idPersonas}"></td>
-					<td th:text="${persona.primer_nombre != null ? persona.primer_nombre : 'N/A'}"></td>
-					<td th:text="${persona.segundo_nombre != null ? persona.segundo_nombre : 'N/A'}"></td>
-					<td th:text="${persona.primer_apellido != null ? persona.primer_apellido : 'N/A'}"></td>
-					<td th:text="${persona.segundo_apellido != null ? persona.segundo_apellido : 'N/A'}"></td>
-					<td th:text="${persona.numeroDocumento != null ? persona.numeroDocumento : 'N/A'}"></td>
-					<td th:text="${persona.numeroContacto != null ? persona.numeroContacto : 'N/A'}"></td>
-					<td th:text="${persona.email != null ? persona.email : 'N/A'}"></td>
-					<td th:text="${persona.rol != null ? persona.rol.nombre_rol : 'N/A'}"></td>
+					<td th:text="${persona.primer_nombre != null ? persona.primer_nombre : ''}"></td>
+					<td th:text="${persona.segundo_nombre != null ? persona.segundo_nombre : ''}"></td>
+					<td th:text="${persona.primer_apellido != null ? persona.primer_apellido : ''}"></td>
+					<td th:text="${persona.segundo_apellido != null ? persona.segundo_apellido : ''}"></td>
+					<td th:text="${persona.numeroDocumento != null ? persona.numeroDocumento : ''}"></td>
+					<td th:text="${persona.numeroContacto != null ? persona.numeroContacto : ''}"></td>
+					<td th:text="${persona.email != null ? persona.email : ''}"></td>
+					<td th:text="${persona.rol != null ? persona.rol.nombre_rol : ''}"></td>
 					<td>
 						<a class="btn btn-info" th:href="@{/editaraprendiz/{idPersonas}(idPersonas=${persona.idPersonas})}">EDITAR</a>
 						<br>

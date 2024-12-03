@@ -24,12 +24,12 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
     return httpSecurity
              .csrf(csrf -> csrf.disable())
                          .authorizeHttpRequests(auth -> auth
-                         .requestMatchers(HttpMethod.POST, "/email/send", "/restablecerContraseña", "/resetpassword", "/AgregarRol").permitAll()
+                         .requestMatchers(HttpMethod.POST, "/email/send", "/restablecerContraseña", "/resetpassword", "/AgregarRol", "/register", "/listaRol/editarRol").permitAll()
                         // Acceso público
                         .requestMatchers("/register", "/listaRol", "/listaRol/**","/login", "/static/**", 
                         "/public/**", "/Logo.png", "/resurces", "/Agregarpersona", "/templates", 
                         "/templates/**", "/olvidecontraseña", "/getPersona","/restablecerContraseña/**", "/restablecerContraseña",
-                        "/listaRol/agregarRol").permitAll()
+                        "/listaRol/agregarRol", "/listaRol/editarRol", "/eliminarRol", "/eliminarRol/**").permitAll()
                         // Acceso solo para administradores
                         .requestMatchers( "/personas", "/personas/**", "/editaraprendiz", "/editaraprendiz/**", "/editarcita", "/editarcita/**").hasRole("Psicosocial")
                         // Acceso general para usuarios autenticados

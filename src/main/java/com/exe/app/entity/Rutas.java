@@ -80,18 +80,29 @@ public class Rutas {
     }
 
     @PostMapping("/register")
-    public String registerPersona(@ModelAttribute("persona") Persona persona, RedirectAttributes redirectAttributes,
-            Model model) {
-        if (personaRepository.findByNumeroDocumento(persona.getNumeroDocumento()).isPresent()) {
-            model.addAttribute("error", "El número de documento ya está en uso.");
+    public String registrarPersona(@ModelAttribute Persona persona, Model model, RedirectAttributes redirectAttrs) {
+        // Validar si el email, número de documento o número de contacto ya existen
+        if (personaService.existsByEmail(persona.getEmail())) {
+            model.addAttribute("error", "El correo electrónico ya está registrado.");
+            model.addAttribute("roles", rolService.getRol());
+            return "register";
+        }
+        if (personaService.existsByNumeroDocumento(persona.getNumeroDocumento())) {
+            model.addAttribute("error", "El número de documento ya está registrado.");
+            model.addAttribute("roles", rolService.getRol());
+            return "register";
+        }
+        if (personaService.existsByNumeroContacto(persona.getNumeroContacto())) {
+            model.addAttribute("error", "El número de contacto ya está registrado.");
+            model.addAttribute("roles", rolService.getRol());
             return "register";
         }
 
-        // Guarda la persona
-        personaRepository.save(persona);
-
-        redirectAttributes.addFlashAttribute("successMessage", "¡Registro exitoso!");
-        return "redirect:/login"; // Redirige al login después de un registro exitoso
+        // Si todo está bien, guardar la persona
+        personaService.saveOrUpdate(persona);
+        redirectAttrs
+                .addFlashAttribute("mensaje", "Agregado correctamente");
+        return "redirect:/login"; // Redirigir a login o a la página deseada
     }
 
     @GetMapping("/olvidecontraseña")
@@ -146,18 +157,37 @@ public class Rutas {
     }
 
     // este metodo captura y muestra la informacion a editar
-    @GetMapping("/AgregarPersona")
+    @GetMapping("/AgregarAprendiz")
     public String AgregarPersona(ModelMap model) {
         model.addAttribute("persona", new Persona());
         model.addAttribute("roles", rolService.getRol());
-        return "Agregarpersona";
+        return "Agregaraprendiz";
     }
 
     // este metodo Guarda la informacion en la BD
-    @PostMapping("/Agregarpersona")
-    public String savePersona(@ModelAttribute("persona") Persona persona) {
+    @PostMapping("/Agregaraprendiz")
+    public String saveOrUpdatePersona(@ModelAttribute("persona") Persona persona, Model model,
+            RedirectAttributes redirectAttrs) {
+        if (personaService.existsByEmail(persona.getEmail())) {
+            model.addAttribute("error", "El correo electrónico ya está registrado.");
+            model.addAttribute("roles", rolService.getRol());
+            return "AgregarAprendiz";
+        }
+        if (personaService.existsByNumeroDocumento(persona.getNumeroDocumento())) {
+            model.addAttribute("error", "El número de documento ya está registrado.");
+            model.addAttribute("roles", rolService.getRol());
+            return "AgregarAprendiz";
+        }
+        if (personaService.existsByNumeroContacto(persona.getNumeroContacto())) {
+            model.addAttribute("error", "El número de contacto ya está registrado.");
+            model.addAttribute("roles", rolService.getRol());
+            return "Agregar";
+        }
+
+        // Si todo está bien, guardar la persona
         personaService.saveOrUpdate(persona);
-        System.out.println("Se registró la Persona exitosamente!" + persona);
+        redirectAttrs
+                .addFlashAttribute("mensaje", "Agregado correctamente");
         return "redirect:/personas/aprendices";
     }
 
@@ -174,9 +204,37 @@ public class Rutas {
 
     // Método para actualizar persona
     @PostMapping("/editarAprendiz")
-    public String metodoEditarPersona(PersonaDTO personaDTO) {
+    public String metodoEditarAprendiz(@RequestParam("idPersonas") Long idPersonas, PersonaDTO personaDTO,
+            RedirectAttributes redirectAttrs, Model model) {
+        Persona personaAntigua = personaService.getPersonaById(idPersonas).get();
+        if (!personaAntigua.getEmail().equalsIgnoreCase(personaDTO.getEmail())) {
+            if (personaService.existsByEmail(personaDTO.getEmail())) {
+                model.addAttribute("error", "El correo electrónico ya está registrado.");
+                model.addAttribute("roles", rolService.getRol());
+                model.addAttribute("persona", personaDTO);
+                return "/editaraprendiz";
+            }
+        }
+        if (!personaAntigua.getNumeroDocumento().equalsIgnoreCase(personaDTO.getNumeroDocumento())) {
+            if (personaService.existsByNumeroDocumento(personaDTO.getNumeroDocumento())) {
+                model.addAttribute("error", "El número de documento ya está registrado.");
+                model.addAttribute("roles", rolService.getRol());
+                model.addAttribute("persona", personaDTO);
+                return "/editaraprendiz";
+            }
+        }
+        if (!personaAntigua.getNumeroContacto().equalsIgnoreCase(personaDTO.getNumeroContacto())) {
+            if (personaService.existsByNumeroContacto(personaDTO.getNumeroContacto())) {
+                model.addAttribute("error", "El número de contacto ya está registrado.");
+                model.addAttribute("roles", rolService.getRol());
+                model.addAttribute("persona", personaDTO);
+                return "/editaraprendiz";
+            }
+        }
+        // Si todo está bien, guardar la persona
         personaService.updatePersona(personaDTO);
-
+        redirectAttrs
+                .addFlashAttribute("mensaje", "Agregado correctamente");
         return "redirect:/personas/aprendices";
     }
 
@@ -191,9 +249,37 @@ public class Rutas {
     }
 
     @PostMapping("/editarPsicosocial")
-    public String metodoEditarPsicosocial(PersonaDTO personaDTO) {
+    public String metodoEditarPsicosial(@RequestParam("idPersonas") Long idPersonas, PersonaDTO personaDTO,
+            RedirectAttributes redirectAttrs, Model model) {
+        Persona personaAntigua = personaService.getPersonaById(idPersonas).get();
+        if (!personaAntigua.getEmail().equalsIgnoreCase(personaDTO.getEmail())) {
+            if (personaService.existsByEmail(personaDTO.getEmail())) {
+                model.addAttribute("error", "El correo electrónico ya está registrado.");
+                model.addAttribute("roles", rolService.getRol());
+                model.addAttribute("persona", personaDTO);
+                return "/editarpsicosocial";
+            }
+        }
+        if (!personaAntigua.getNumeroDocumento().equalsIgnoreCase(personaDTO.getNumeroDocumento())) {
+            if (personaService.existsByNumeroDocumento(personaDTO.getNumeroDocumento())) {
+                model.addAttribute("error", "El número de documento ya está registrado.");
+                model.addAttribute("roles", rolService.getRol());
+                model.addAttribute("persona", personaDTO);
+                return "/editarpsicosocial";
+            }
+        }
+        if (!personaAntigua.getNumeroContacto().equalsIgnoreCase(personaDTO.getNumeroContacto())) {
+            if (personaService.existsByNumeroContacto(personaDTO.getNumeroContacto())) {
+                model.addAttribute("error", "El número de contacto ya está registrado.");
+                model.addAttribute("roles", rolService.getRol());
+                model.addAttribute("persona", personaDTO);
+                return "/editarpsicosocial";
+            }
+        }
+        // Si todo está bien, guardar la persona
         personaService.updatePersona(personaDTO);
-
+        redirectAttrs
+                .addFlashAttribute("mensaje", "Agregado correctamente");
         return "redirect:/personas/psicosociales";
     }
 
@@ -222,6 +308,27 @@ public class Rutas {
     public String saveRol(@ModelAttribute("rol") Rol rol) {
         rolService.saveOrUpdate(rol);
         System.out.println("Se registró la Persona exitosamente!" + rol);
+        return "redirect:/listaRol";
+    }
+
+    // Editar ROL
+
+    @GetMapping("/listaRol/editarRol/{idRol}")
+    public String editarRol(@PathVariable("idRol") Long idRol, Model model) {
+        Rol rol = rolService.obtenerRolPorId(idRol);
+        model.addAttribute("rol", rol);
+        return "editarRol";
+    }
+
+    @PostMapping("/listaRol/editarRol")
+    public String editarRol(@ModelAttribute Rol rol, Model model) {
+        rolService.saveOrUpdate(rol);
+        return "redirect:/listaRol";
+    }
+
+    @GetMapping("/eliminarRol/{idRol}")
+    public String eliminarRol(Model model, @PathVariable Long idRol) {
+        rolService.eliminarRol(idRol);
         return "redirect:/listaRol";
     }
 
@@ -280,23 +387,16 @@ public class Rutas {
     }
 
     // Guardar los cambios de la cita editada
-@PostMapping("/editarcita")
-public String actualizarCita(@ModelAttribute("cita") Cita cita, @RequestParam("numeroDocumento") String numeroDocumento) {
-    // Buscar la persona asociada por número de documento
-    Optional<Persona> optionalPersona = personaService.obtenerPersonaPorNumeroDocumento(numeroDocumento);
-
-    if (optionalPersona.isPresent()) {
-        // Asociar la persona a la cita y guardar
-        cita.setPersona(optionalPersona.get());
-        citaService.saveOrUpdate(cita);
-        System.out.println("Cita actualizada exitosamente: " + cita);
-    } else {
-        System.out.println("No se encontró una persona con el número de documento: " + numeroDocumento);
-        return "redirect:/editarCita/" + cita.getIdCitas() + "?error=No se encontró una persona con ese número de documento";
+    @PostMapping("/editarcita")
+    public String actualizarCita(@ModelAttribute("cita") Cita cita) {
+        Long idCita = cita.getIdCitas();
+        Cita citaAntigua =citaService.getCitaById(idCita).get(); // Obtener la cita por ID
+            // Asociar la persona a la cita y guardar
+            cita.setPersona(citaAntigua.getPersona());
+            citaService.saveOrUpdate(cita);
+            System.out.println("Cita actualizada exitosamente: " + cita);
+        return "redirect:citas";
     }
-
-    return "redirect:citas";
-}
 
     @GetMapping("/eliminarcita/{idCitas}")
     public String eliminarcita(Model model, @PathVariable Long idCitas) {

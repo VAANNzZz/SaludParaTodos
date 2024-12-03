@@ -21,6 +21,9 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
                     <h1 class="text-center">Editar Aprendiz</h1>
+                    <div th:if="${error}" class="alert alert-danger">
+                        <p th:text="${error}"></p>
+                    </div>
                     <div class="card-body">
                         <form th:action="@{/editarAprendiz}" th:object="${persona}" method="POST">
                             <input type="hidden" th:field="*{idPersonas}"/>
@@ -30,14 +33,16 @@
                                 <input type="text" name="primer_nombre" th:field="*{primer_nombre}"
                                        class="form-control"
                                        placeholder="Obligatorio" 
-                                       required/>
+                                       required
+                                       pattern="[a-zA-Z ]{1,10}" title="Solo letras, máximo 10 caracteres">
                             </div>
 
                             <div class="form-group">
                                 <label for="segundo_nombre">Segundo nombre</label>
                                 <input type="text" name="segundo_nombre" th:field="*{segundo_nombre}"
                                        class="form-control"
-                                       placeholder="Opcional" />
+                                       placeholder="Opcional" 
+                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
                             </div>
 
                             <div class="form-group">
@@ -45,29 +50,38 @@
                                 <input type="text" name="primer_apellido" th:field="*{primer_apellido}"
                                        class="form-control"
                                        placeholder="Obligatorio" 
-                                       required />
+                                       required 
+                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
                             </div>
 
                             <div class="form-group">
                                 <label for="segundo_apellido">Segundo apellido</label>
                                 <input type="text" name="segundo_apellido" th:field="*{segundo_apellido}"
                                        class="form-control"
-                                       placeholder="Opcional" />
+                                       placeholder="Opcional" 
+                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
 
                             <div class="form-group">
                                         <label for="numero_documento">N° Documento</label>
-                                        <input type="text" name="numeroDocumento" th:field="*{numeroDocumento}"
+                                        <input type="number" name="numeroDocumento" th:field="*{numeroDocumento}"
                                                class="form-control"
                                                placeholder="Obligatorio" 
-                                               required/>
+                                               required
+                                               min="100000" max="9999999999" 
+                                       title="Debe tener entre 7 y 10 dígitos"
+                                       inputmode="numeric"
+                                       oninput="this.value = this.value.replace(/e/gi, '')">
                             </div>  
 
                             <div class="form-group">
                                 <label for="numero_contacto">Numero de contacto</label>
-                                <input type="number" name="numeroContacto" th:field="*{numeroContacto}"
+                                <input type="tel" name="numeroContacto" th:field="*{numeroContacto}"
                                        class="form-control"
                                        placeholder="Obligatorio"
-                                       required/>
+                                       pattern="(300|301|302|303|304|305|310|311|312|313|314|320|321|322|323|324)\d{7}" 
+                                       title="Debe comenzar con uno de los prefijos permitidos y tener 10 dígitos"
+                                       required
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                             </div> 
 
                             <div class="form-group">
@@ -75,7 +89,10 @@
                                 <input type="email" name="email" th:field="*{email}"
                                        class="form-control"
                                        placeholder="Obligatorio"
-                                       required/>
+                                       required
+                                       pattern="^[a-zA-Z0-9]+@(gmail\.com|hotmail\.com)$"
+                                       maxlength="45"
+                                       title="Debe tener entre 1 a 35 caracteres y ser un correo de gmail o hotmail">
                             </div>
                             <div class="form-group">
                                 <label for="roles">Rol</label>

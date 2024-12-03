@@ -23,6 +23,12 @@ public class RolService {
         rolRepository.save(rol);
     }
 
+    public void eliminarRol(Long idRol) {
+        if (rolRepository.existsById(idRol)) {
+            rolRepository.deleteById(idRol);
+        }
+    }
+
     public List<Rol> getAllRoles() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAllRoles'");

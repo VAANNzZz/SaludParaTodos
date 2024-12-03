@@ -122,15 +122,21 @@ h1 {
 				<tr>
 					<th scope="col">ID Rol</th>
 					<th scope="col">Nombre rol</th>
+					<th scope="col">Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each=" rol:${roles}">
 					<td th:text="${rol.idRol}"></td>
 					<td th:text="${rol.nombre_rol}"></td>
+					<td>
+						<a class="btn btn-info" th:href="@{/listaRol/editarRol/{idRol}(idRol=${rol.idRol})}">EDITAR</a>
+						<br>
+						<br>
+						<a class="btn btn-danger" th:href="@{/eliminarRol/{idRol}(idRol=${rol.idRol})}">ELIMINAR</a>
+					</td>
 				</tr>
 			</tbody>
-		</table>
 		</table>
 	</div>
 	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
