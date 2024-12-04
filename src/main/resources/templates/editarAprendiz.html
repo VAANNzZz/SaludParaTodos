@@ -64,6 +64,17 @@
                                        placeholder="Opcional" 
                                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,10}" 
                                         title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tipoDocumento">Tipo Documento</label>
+                                <select class="form-control" id="tipoDocumento" name="tipoDocumento" th:field="*{tipoDocumento}" required aria-placeholder="Seleccione un tipo de documento">
+                                    <option th:value="CedulaCiudadania">Cedula Ciudadania</option>
+                                    <option th:value="TarjetaIdentidad">Tarjeta de Identidad</option>
+                                    <option th:value="CedulaExtranjeria">Cedula Extranjeria</option>
+                                    <option th:value="Pasaporte">Pasaporte</option>
+                                </select>
+                            </div>
 
                             <div class="form-group">
                                         <label for="numero_documento">N° Documento</label>

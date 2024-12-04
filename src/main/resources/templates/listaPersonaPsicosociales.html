@@ -8,7 +8,96 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="./public/CSS/estilostabalas.css">
-	<link rel="stylesheet" href="/listaPersonaAprendices.css">
+	
+	<style>
+		body {
+    margin: 0;
+    padding: 0;
+    background-image: url(/fondopsicologia.jpg); /* Fondo de la página */
+    background-size: cover; /* Asegura que el fondo cubra toda la ventana */
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Mínima altura de la ventana */
+    display: flex;
+    align-items: left; /* Centrar el contenido verticalmente */
+    justify-content: center; /* Centrar el contenido horizontalmente */
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo semitransparente */
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%; /* Ocupa el 90% del ancho de la ventana */
+    max-width: 1600px; /* No excede un máximo de 1200px */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para resaltar el contenedor */
+}
+
+
+h1 {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.8); 
+}
+
+.table {
+    color: rgba(0, 0, 0, 0.8); 
+    background-color: rgba(255, 255, 255, 0.5); 
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.1); 
+}
+
+.thead-dark th {
+    background-color: rgba(52, 58, 64, 0.8); 
+    border: 1px solid rgba(69, 77, 85, 0.8); 
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.4); 
+    transition: background-color 0.3s ease;
+}
+
+/* Botones */
+.btn {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.btn-info {
+    background-color: rgba(23, 162, 184, 0.8); /* Botón semi-transparente */
+    border: none;
+}
+
+.btn-danger {
+    background-color: rgba(220, 53, 69, 0.8); /* Botón semi-transparente */
+    border: none;
+}
+
+.btn-primary {
+    background-color: rgba(0, 123, 255, 0.8); /* Botón semi-transparente */
+    border: none;
+}
+
+.btn-success {
+    background-color: rgba(40, 167, 69, 0.8); /* Botón semi-transparente */
+    border: none;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+	</style>
 	
 </head>
 
@@ -33,6 +122,7 @@
 					<th scope="col">Segundo nombre</th>
 					<th scope="col">Primer apellido</th>
 					<th scope="col">Segundo apellido</th>
+					<th scope="col">Tipo Documento</th>
 					<th scope="col">N° Documento</th>
 					<th scope="col">Numero contacto</th>
 					<th scope="col">Email</th>
@@ -47,6 +137,7 @@
 					<td th:text="${persona.segundo_nombre != null ? persona.segundo_nombre : ''}"></td>
 					<td th:text="${persona.primer_apellido != null ? persona.primer_apellido : ''}"></td>
 					<td th:text="${persona.segundo_apellido != null ? persona.segundo_apellido : ''}"></td>
+					<td th:text="${persona.tipoDocumento != null ? persona.tipoDocumento : ''}"></td>
 					<td th:text="${persona.numeroDocumento != null ? persona.numeroDocumento : ''}"></td>
 					<td th:text="${persona.numeroContacto != null ? persona.numeroContacto : ''}"></td>
 					<td th:text="${persona.email != null ? persona.email : 'N/A'}"></td>

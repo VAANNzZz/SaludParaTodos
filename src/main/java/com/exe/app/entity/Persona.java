@@ -2,6 +2,8 @@ package com.exe.app.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +16,13 @@ import lombok.Data;
 @Entity
 @Table(name = "personas")
 public class Persona {
+
+    public enum TipoDocumento {
+        CedulaCiudadania,
+        TarjetaIdentidad,
+        CedulaExtranjeria,
+        Pasaporte
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +40,10 @@ public class Persona {
 
     @Column(name = "segundo_apellido")
     private String segundo_apellido;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipoDocumento", nullable = false)
+    private TipoDocumento tipoDocumento = TipoDocumento.CedulaCiudadania;
 
     @Column(name = "numeroDocumento",unique = true, nullable = false)
     private String numeroDocumento;
@@ -53,12 +66,14 @@ public class Persona {
 
 
 
-    public Persona(long idPersonas, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, String numeroDocumento, String numeroContacto, String email, String contraseña, Rol rol) {
+
+    public Persona(long idPersonas, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, TipoDocumento tipoDocumento, String numeroDocumento, String numeroContacto, String email, String contraseña, Rol rol) {
         this.idPersonas = idPersonas;
         this.primer_nombre = primer_nombre;
         this.segundo_nombre = segundo_nombre;
         this.primer_apellido = primer_apellido;
         this.segundo_apellido = segundo_apellido;
+        this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
         this.numeroContacto = numeroContacto;
         this.email = email;
@@ -107,6 +122,14 @@ public class Persona {
         this.segundo_apellido = segundo_apellido;
     }
 
+    public TipoDocumento getTipoDocumento() {
+        return this.tipoDocumento;
+    }
+
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
     public String getNumeroDocumento() {
         return this.numeroDocumento;
     }
@@ -146,6 +169,7 @@ public class Persona {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
+    
     
     
 }

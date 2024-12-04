@@ -8,6 +8,9 @@ public class PersonaDTO {
 	private String segundo_nombre;
 	private String primer_apellido;
 	private String segundo_apellido;
+	private enum TipoDocumento {
+		CedulaCiudadania, TarjetaIdentidad, CedulaExtranjero, Pasaporte}; 
+	private String tipoDocumento;
 	private String numeroDocumento;
 	private String numeroContacto;
 	private String email;
@@ -18,12 +21,13 @@ public class PersonaDTO {
 	}
 	
 
-	public PersonaDTO(Long idPersonas, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, String numeroDocumento, String numeroContacto, String email, Rol rol, String contraseña) {
+	public PersonaDTO(Long idPersonas, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, String tipoDocumento, String numeroDocumento, String numeroContacto, String email, Rol rol, String contraseña) {
 		this.idPersonas = idPersonas;
 		this.primer_nombre = primer_nombre;
 		this.segundo_nombre = segundo_nombre;
 		this.primer_apellido = primer_apellido;
 		this.segundo_apellido = segundo_apellido;
+		this.tipoDocumento = tipoDocumento;
 		this.numeroDocumento = numeroDocumento;
 		this.numeroContacto = numeroContacto;
 		this.email = email;
@@ -70,6 +74,14 @@ public class PersonaDTO {
 
 	public void setSegundo_apellido(String segundo_apellido) {
 		this.segundo_apellido = segundo_apellido;
+	}
+
+	public String getTipoDocumento() {
+		return this.tipoDocumento;
+	}
+
+	public void setTipoDocumento(String tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 
 	public String getNumeroDocumento() {

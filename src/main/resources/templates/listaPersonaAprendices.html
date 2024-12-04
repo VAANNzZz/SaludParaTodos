@@ -36,6 +36,7 @@
 					<th scope="col">Segundo nombre</th>
 					<th scope="col">Primer apellido</th>
 					<th scope="col">Segundo apellido</th>
+					<th scope="col">Tipo de documento</th>
 					<th scope="col">N° Documento</th>
 					<th scope="col">Numero contacto</th>
 					<th scope="col">Email</th>
@@ -50,6 +51,7 @@
 					<td th:text="${persona.segundo_nombre != null ? persona.segundo_nombre : ''}"></td>
 					<td th:text="${persona.primer_apellido != null ? persona.primer_apellido : ''}"></td>
 					<td th:text="${persona.segundo_apellido != null ? persona.segundo_apellido : ''}"></td>
+					<td th:text="${persona.tipoDocumento != null ? persona.tipoDocumento : ''}"></td>
 					<td th:text="${persona.numeroDocumento != null ? persona.numeroDocumento : ''}"></td>
 					<td th:text="${persona.numeroContacto != null ? persona.numeroContacto : ''}"></td>
 					<td th:text="${persona.email != null ? persona.email : ''}"></td>

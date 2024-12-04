@@ -31,7 +31,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
                         "/templates/**", "/olvidecontraseña", "/getPersona","/restablecerContraseña/**", "/restablecerContraseña",
                         "/listaRol/agregarRol", "/listaRol/editarRol", "/eliminarRol", "/eliminarRol/**").permitAll()
                         // Acceso solo para administradores
-                        .requestMatchers( "/personas", "/personas/**", "/editaraprendiz", "/editaraprendiz/**", "/editarcita", "/editarcita/**").hasRole("Psicosocial")
+                        .requestMatchers( "/personas", "/personas/**", "/editaraprendiz", "/editaraprendiz/**","/citas", "/editarcita", "/editarcita/**", "/canalOrientadores").hasRole("Psicosocial")
                         // Acceso general para usuarios autenticados
                         .anyRequest().authenticated()
                         )
