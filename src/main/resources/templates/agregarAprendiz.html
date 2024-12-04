@@ -32,7 +32,8 @@
                                 <label for="primer_nombre">Primer nombre</label>
                                 <input type="text" name="primer_nombre" th:field="*{primer_nombre}" class="form-control" 
                                        id="primer_nombre" placeholder="Obligatorio" required aria-required="true"
-                                       pattern="[a-zA-Z ]{1,10}" title="Solo letras, máximo 10 caracteres">
+                                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,10}" 
+                                        title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres">
                             </div>
 
                             <!-- Segundo nombre -->
@@ -40,7 +41,8 @@
                                 <label for="segundo_nombre">Segundo nombre</label>
                                 <input type="text" name="segundo_nombre" th:field="*{segundo_nombre}" class="form-control" 
                                        id="segundo_nombre" placeholder="Opcional"
-                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
+                                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,10}" 
+                                        title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres">
                             </div>
 
                             <!-- Primer apellido -->
@@ -48,7 +50,8 @@
                                 <label for="primer_apellido">Primer apellido</label>
                                 <input type="text" name="primer_apellido" th:field="*{primer_apellido}" class="form-control" 
                                        id="primer_apellido" placeholder="Obligatorio" required aria-required="true"
-                                       pattern="[a-zA-Z ]{1,10}" title="Solo letras, máximo 10 caracteres">
+                                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,10}" 
+                                        title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres">
                             </div>
 
                             <!-- Segundo apellido -->
@@ -56,7 +59,8 @@
                                 <label for="segundo_apellido">Segundo apellido</label>
                                 <input type="text" name="segundo_apellido" th:field="*{segundo_apellido}" class="form-control" 
                                        id="segundo_apellido" placeholder="Opcional"
-                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
+                                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,10}" 
+                                        title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres">
                             </div>
 
                             <!-- Número de documento -->

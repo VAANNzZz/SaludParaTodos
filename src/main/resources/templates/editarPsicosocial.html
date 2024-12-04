@@ -34,7 +34,8 @@
                                        class="form-control"
                                        placeholder="Obligatorio" 
                                        required
-                                       pattern="[a-zA-Z ]{1,10}" title="Solo letras, máximo 10 caracteres">
+                                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,10}" 
+                                        title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres">
                             </div>
 
                             <div class="form-group">
@@ -42,7 +43,8 @@
                                 <input type="text" name="segundo_nombre" th:field="*{segundo_nombre}"
                                        class="form-control"
                                        placeholder="Opcional" 
-                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
+                                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,10}" 
+                                        title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres">
                             </div>
 
                             <div class="form-group">
@@ -51,7 +53,8 @@
                                        class="form-control"
                                        placeholder="Obligatorio" 
                                        required 
-                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
+                                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,10}" 
+                                        title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres">
                             </div>
 
                             <div class="form-group">
@@ -59,7 +62,8 @@
                                 <input type="text" name="segundo_apellido" th:field="*{segundo_apellido}"
                                        class="form-control"
                                        placeholder="Opcional" 
-                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
+                                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,10}" 
+                                        title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres">
 
                             <div class="form-group">
                                         <label for="numero_documento">N° Documento</label>

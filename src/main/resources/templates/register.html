@@ -1,295 +1,397 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Agregar Persona</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/register.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/register.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <style>
-        /* Estilos generales */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            position: relative;
-        }
+      /* Estilos generales */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        position: relative;
+      }
 
-        /* Contenedor de botones */
-        .button-container {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 999;
-            display: flex;
-            gap: 15px; /* Espacio entre los botones */
-        }
+      /* Contenedor de botones */
+      .button-container {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 999;
+        display: flex;
+        gap: 15px; /* Espacio entre los botones */
+      }
 
-        /* Estilo de los botones */
-        .btn-login, .btn-Rol {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 16px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
+      /* Estilo de los botones */
+      .btn-login,
+      .btn-Rol {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
 
-        .btn-login:hover, .btn-Rol:hover {
-            background-color: #0056b3;
-            cursor: pointer;
-        }
+      .btn-login:hover,
+      .btn-Rol:hover {
+        background-color: #0056b3;
+        cursor: pointer;
+      }
 
-        .form-box {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+      .form-box {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        box-sizing: border-box;
+      }
 
-        span {
-            color: red;
-        }
+      span {
+        color: red;
+      }
 
-        .container {
-            margin-top: 50px;
-        }
+      .container {
+        margin-top: 50px;
+      }
 
-        /* Estilos para la tarjeta */
+      /* Estilos para la tarjeta */
+      .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        padding: 30px;
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      .card h1 {
+        font-size: 28px;
+        color: #0056b3;
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+
+      .form-control {
+        border-radius: 5px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+      }
+
+      .form-control:focus {
+        border-color: #0056b3;
+        box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+      }
+
+      .btn-primary {
+        background-color: #0056b3;
+        border-color: #0056b3;
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 5px;
+      }
+
+      .btn-primary:hover {
+        background-color: #00408b;
+        border-color: #00408b;
+      }
+
+      .navbar {
+        margin-bottom: 20px;
+      }
+
+      /* Estilos para el footer */
+      .box-footer {
+        margin-top: 20px;
+      }
+
+      /* Responsive: Para pantallas más pequeñas */
+      @media (max-width: 768px) {
         .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            padding: 30px;
-        }
-
-        .card-body {
-            padding: 20px;
+          padding: 20px;
         }
 
         .card h1 {
-            font-size: 28px;
-            color: #0056b3;
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 5px;
-            font-weight: 600;
+          font-size: 24px;
         }
 
         .form-control {
-            border-radius: 5px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-        }
-
-        .form-control:focus {
-            border-color: #0056b3;
-            box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+          font-size: 14px;
         }
 
         .btn-primary {
-            background-color: #0056b3;
-            border-color: #0056b3;
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 5px;
+          font-size: 14px;
+          padding: 10px;
         }
-
-        .btn-primary:hover {
-            background-color: #00408b;
-            border-color: #00408b;
-        }
-
-        .navbar {
-            margin-bottom: 20px;
-        }
-
-        /* Estilos para el footer */
-        .box-footer {
-            margin-top: 20px;
-        }
-
-        /* Responsive: Para pantallas más pequeñas */
-        @media (max-width: 768px) {
-            .card {
-                padding: 20px;
-            }
-
-            .card h1 {
-                font-size: 24px;
-            }
-
-            .form-control {
-                font-size: 14px;
-            }
-
-            .btn-primary {
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Contenedor para los botones -->
     <div class="button-container">
-        <!-- Botón Volver al Login -->
-        <a th:href="@{/login}" class="btn-login" aria-label="Volver al login">Volver al Login</a>
+      <!-- Botón Volver al Login -->
+      <a th:href="@{/login}" class="btn-login" aria-label="Volver al login"
+        >Volver al Login</a
+      >
 
-        <!-- Botón Agregar Rol -->
-        <a th:href="@{/listaRol}" class="btn-Rol" aria-label="Agregar Rol">Lista Rol</a> 
+      <!-- Botón Agregar Rol -->
+      <a th:href="@{/listaRol}" class="btn-Rol" aria-label="Agregar Rol"
+        >Lista Rol</a
+      >
     </div>
     <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-8 col-sm-10">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h1 class="text-center mb-4">Crear Cuenta</h1>
-                        
-                        <!-- Mostrar mensaje de error -->
-                        <div th:if="${error}" class="alert alert-danger">
-                            <p th:text="${error}"></p>
-                        </div>
-                        
-                        <form th:action="@{/register}" th:object="${persona}" method="POST" aria-labelledby="form-title">
-                            
-                            <!-- Primer nombre -->
-                            <div class="form-group">
-                                <label for="primer_nombre">Primer nombre</label>
-                                <input type="text" name="primer_nombre" th:field="*{primer_nombre}" class="form-control" 
-                                       id="primer_nombre" placeholder="Obligatorio" required aria-required="true"
-                                       pattern="[a-zA-Z ]{1,10}" title="Solo letras, máximo 10 caracteres">
-                            </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h1 class="text-center mb-4">Crear Cuenta</h1>
 
-                            <!-- Segundo nombre -->
-                            <div class="form-group">
-                                <label for="segundo_nombre">Segundo nombre</label>
-                                <input type="text" name="segundo_nombre" th:field="*{segundo_nombre}" class="form-control" 
-                                       id="segundo_nombre" placeholder="Opcional"
-                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
-                            </div>
+              <!-- Mostrar mensaje de error -->
+              <div th:if="${error}" class="alert alert-danger">
+                <p th:text="${error}"></p>
+              </div>
 
-                            <!-- Primer apellido -->
-                            <div class="form-group">
-                                <label for="primer_apellido">Primer apellido</label>
-                                <input type="text" name="primer_apellido" th:field="*{primer_apellido}" class="form-control" 
-                                       id="primer_apellido" placeholder="Obligatorio" required aria-required="true"
-                                       pattern="[a-zA-Z ]{1,10}" title="Solo letras, máximo 10 caracteres">
-                            </div>
-
-                            <!-- Segundo apellido -->
-                            <div class="form-group">
-                                <label for="segundo_apellido">Segundo apellido</label>
-                                <input type="text" name="segundo_apellido" th:field="*{segundo_apellido}" class="form-control" 
-                                       id="segundo_apellido" placeholder="Opcional"
-                                       pattern="[a-zA-Z ]{0,10}" title="Solo letras, máximo 10 caracteres">
-                            </div>
-
-                            <!-- Número de documento -->
-                            <div class="form-group">
-                                <label for="numero_documento">N° Documento</label>
-                                <input type="number" name="numero_documento" th:field="*{numeroDocumento}" class="form-control" 
-                                       id="numero_documento" placeholder="Obligatorio" required aria-required="true"
-                                       min="100000" max="9999999999" 
-                                       title="Debe tener entre 7 y 10 dígitos"
-                                       inputmode="numeric"
-                                       oninput="this.value = this.value.replace(/e/gi, '')">
-                            </div>
-
-                            <!-- Número de contacto -->
-                            <div class="form-group">
-                                <label for="numeroContacto">Número de contacto</label>
-                                <input type="tel" name="numeroContacto" th:field="*{numeroContacto}" class="form-control" 
-                                       id="numeroContacto" placeholder="Obligatorio" required aria-required="true"
-                                       pattern="(300|301|302|303|304|305|310|311|312|313|314|315|316|317|318|319|320|321|322|323|324|333)\d{7}" 
-                                       title="Debe comenzar con uno de los prefijos permitidos y tener 10 dígitos"
-                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                            </div>
-
-                            <!-- Correo -->
-                            <div class="form-group">
-                                <label for="email">Correo</label>
-                                <input type="email" name="email" th:field="*{email}" class="form-control" 
-                                       id="email" placeholder="Obligatorio" required aria-required="true"
-                                       pattern="^[a-zA-Z0-9]+@(gmail\.com|hotmail\.com)$"
-                                       maxlength="45"
-                                       title="Debe tener entre 1 a 35 caracteres y ser un correo de gmail o hotmail">
-                            </div>
-
-                            <!-- Contraseña -->
-                            <div class="form-group">
-                                <label for="contraseña">Contraseña</label>
-                                <div class="input-group">
-                                    <input type="password" name="contraseña" th:field="*{contraseña}" class="form-control" 
-                                           id="contraseña" placeholder="Obligatorio" required minlength="8" aria-required="true"
-                                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}"
-                                           title="La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula y un número">
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
-                                            👁️
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Roles -->
-                            <div class="form-group">
-                                <label for="roles">Rol</label>
-                                <select th:field="*{rol}" name="roles" id="roles" class="form-control" aria-label="Seleccionar rol">
-                                    <option th:each="rol : ${roles}"
-                                            th:value="${rol.idRol}" 
-                                            th:text="${rol.nombre_rol}"></option>
-                                </select>
-                            </div>
-
-                            <!-- Autorización -->
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="autorizacion" name="autorizacion" required>
-                                <label class="form-check-label" for="autorizacion">
-                                    Autorizo el tratamiento de la información brindada de acuerdo con la política de privacidad.
-                                </label>
-                            </div>
-
-                            <!-- Botón de envío -->
-                            <div class="form-group text-center">
-                                <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
-                            </div>
-                        </form>
-                    </div>
+              <form
+                th:action="@{/register}"
+                th:object="${persona}"
+                method="POST"
+                aria-labelledby="form-title"
+              >
+                <!-- Primer nombre -->
+                <div class="form-group">
+                  <label for="primer_nombre">Primer nombre</label>
+                  <input
+                    type="text"
+                    name="primer_nombre"
+                    th:field="*{primer_nombre}"
+                    class="form-control"
+                    id="primer_nombre"
+                    placeholder="Obligatorio"
+                    required
+                    aria-required="true"
+                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,10}"
+                    title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres"
+                  />
                 </div>
+
+                <!-- Segundo nombre -->
+                <div class="form-group">
+                  <label for="segundo_nombre">Segundo nombre</label>
+                  <input
+                    type="text"
+                    name="segundo_nombre"
+                    th:field="*{segundo_nombre}"
+                    class="form-control"
+                    id="segundo_nombre"
+                    placeholder="Opcional"
+                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,10}" 
+                    title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres"/>
+                </div>
+
+                <!-- Primer apellido -->
+                <div class="form-group">
+                  <label for="primer_apellido">Primer apellido</label>
+                  <input
+                    type="text"
+                    name="primer_apellido"
+                    th:field="*{primer_apellido}"
+                    class="form-control"
+                    id="primer_apellido"
+                    placeholder="Obligatorio"
+                    required
+                    aria-required="true"
+                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,10}" 
+                    title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres"
+                  />
+                </div>
+
+                <!-- Segundo apellido -->
+                <div class="form-group">
+                  <label for="segundo_apellido">Segundo apellido</label>
+                  <input
+                    type="text"
+                    name="segundo_apellido"
+                    th:field="*{segundo_apellido}"
+                    class="form-control"
+                    id="segundo_apellido"
+                    placeholder="Opcional"
+                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,10}" 
+                    title="Solo letras (incluyendo tildes y ñ), máximo 10 caracteres"
+                  />
+                </div>
+
+                <!-- Número de documento -->
+                <div class="form-group">
+                  <label for="numero_documento">N° Documento</label>
+                  <input
+                    type="number"
+                    name="numero_documento"
+                    th:field="*{numeroDocumento}"
+                    class="form-control"
+                    id="numero_documento"
+                    placeholder="Obligatorio"
+                    required
+                    aria-required="true"
+                    min="100000"
+                    max="9999999999"
+                    title="Debe tener entre 7 y 10 dígitos"
+                    inputmode="numeric"
+                    oninput="this.value = this.value.replace(/e/gi, '')"
+                  />
+                </div>
+
+                <!-- Número de contacto -->
+                <div class="form-group">
+                  <label for="numeroContacto">Número de contacto</label>
+                  <input
+                    type="tel"
+                    name="numeroContacto"
+                    th:field="*{numeroContacto}"
+                    class="form-control"
+                    id="numeroContacto"
+                    placeholder="Obligatorio"
+                    required
+                    aria-required="true"
+                    pattern="(300|301|302|303|304|305|310|311|312|313|314|315|316|317|318|319|320|321|322|323|324|333)\d{7}"
+                    title="Debe comenzar con uno de los prefijos permitidos y tener 10 dígitos"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                  />
+                </div>
+
+                <!-- Correo -->
+                <div class="form-group">
+                  <label for="email">Correo</label>
+                  <input
+                    type="email"
+                    name="email"
+                    th:field="*{email}"
+                    class="form-control"
+                    id="email"
+                    placeholder="Obligatorio"
+                    required
+                    aria-required="true"
+                    pattern="^[a-zA-Z0-9]+@(gmail\.com|hotmail\.com)$"
+                    maxlength="45"
+                    title="Debe tener entre 1 a 35 caracteres y ser un correo de gmail o hotmail"
+                  />
+                </div>
+
+                <!-- Contraseña -->
+                <div class="form-group">
+                  <label for="contraseña">Contraseña</label>
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      name="contraseña"
+                      th:field="*{contraseña}"
+                      class="form-control"
+                      id="contraseña"
+                      placeholder="Obligatorio"
+                      required
+                      minlength="8"
+                      aria-required="true"
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}"
+                      title="La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula y un número"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        id="togglePassword"
+                      >
+                        👁️
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Roles -->
+                <div class="form-group">
+                  <label for="roles">Rol</label>
+                  <select
+                    th:field="*{rol}"
+                    name="roles"
+                    id="roles"
+                    class="form-control"
+                    aria-label="Seleccionar rol"
+                  >
+                    <option
+                      th:each="rol : ${roles}"
+                      th:value="${rol.idRol}"
+                      th:text="${rol.nombre_rol}"
+                    ></option>
+                  </select>
+                </div>
+
+                <!-- Autorización -->
+                <div class="form-group form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="autorizacion"
+                    name="autorizacion"
+                    required
+                  />
+                  <label class="form-check-label" for="autorizacion">
+                    Autorizo el tratamiento de la información brindada de
+                    acuerdo con la política de privacidad.
+                  </label>
+                </div>
+
+                <!-- Botón de envío -->
+                <div class="form-group text-center">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    Enviar
+                  </button>
+                </div>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <script>
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordField = document.getElementById('contraseña');
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordField = document.getElementById("contraseña");
 
-        togglePassword.addEventListener('click', () => {
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
-            togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
-        });
+      togglePassword.addEventListener("click", () => {
+        const type =
+          passwordField.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        passwordField.setAttribute("type", type);
+        togglePassword.textContent = type === "password" ? "👁️" : "🙈";
+      });
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>
