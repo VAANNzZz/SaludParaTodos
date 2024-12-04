@@ -50,6 +50,14 @@
                             </select>
                         </div>
 
+                        <div class="form-group">
+                            <label for="tipoCita">Tipo Cita</label>
+                            <select id="tipoCita" class="form-control" th:field="*{tipoCita}" required>
+                                <option value="VIRTUAL">VIRTUAL</option>
+                                <option value="PRESENCIAL">PRESENCIAL</option>
+                            </select>
+                        </div>
+
                         <!-- Campos dependientes (rellenados automáticamente) -->
                         <div class="form-group">
                             <label for="idPersona">ID Persona</label>
